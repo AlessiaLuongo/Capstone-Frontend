@@ -25,11 +25,11 @@ const NavbarComponent = () => {
           <Form className="d-flex">
             <Form.Control
               type="search"
-              placeholder="Search"
+              placeholder="Cerca su HelloWorld"
               className="me-2"
               aria-label="Search"
             />
-            <Button variant="outline-dark">Search</Button>
+            <Button variant="outline-dark">Cerca</Button>
           </Form>
         </Navbar.Collapse>
       </Container>
