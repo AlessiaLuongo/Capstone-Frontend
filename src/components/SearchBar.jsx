@@ -2,7 +2,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 
 const SearchBar = () => {
   return (
-    <Row className="d-flex justify-content-center align-content-center m-3">
+    <Row className="justify-content-center align-content-center m-4">
       <Col xs={12} md={8} lg={6}>
         <Form className="d-flex">
           <Form.Control
