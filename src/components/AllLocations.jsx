@@ -1,6 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
 
-const WelcomePage = () => {
+const AllLocations = () => {
   return (
     <Container>
       <Row>
@@ -9,5 +9,4 @@ const WelcomePage = () => {
     </Container>
   );
 };
-
-export default WelcomePage;
+export default AllLocations;
