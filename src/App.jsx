@@ -6,6 +6,7 @@ import NavbarComponent from "./components/NavbarComponent";
 import SearchBar from "./components/SearchBar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AllActivities from "./components/AllActivities";
+import AllLocations from "./components/AllLocations";
 
 function App() {
   return (
@@ -17,8 +18,9 @@ function App() {
         <main>
           <SearchBar />
           <Routes>
-            <Route path="/activities" element={<AllActivities />}></Route>
             <Route path="/" element={<Homepage />}></Route>
+            <Route path="/activities" element={<AllActivities />}></Route>
+            <Route path="/locations" element={<AllLocations />}></Route>
           </Routes>
         </main>
         <footer></footer>
