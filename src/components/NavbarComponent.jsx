@@ -1,6 +1,11 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 const NavbarComponent = () => {
+  const token = useSelector((state) => {
+    return state.loginUserReducer.accessToken;
+  });
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
@@ -23,8 +28,14 @@ const NavbarComponent = () => {
             <Nav.Link href="/locations">Luoghi</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link href="/login">Login</Nav.Link>
-            <Nav.Link href="/registrati">Registrati</Nav.Link>
+            {token ? (
+              <Nav.Link href="/profile">Profilo</Nav.Link>
+            ) : (
+              <>
+                <Nav.Link href="/login">Login</Nav.Link>
+                <Nav.Link href="/registrati">Registrati</Nav.Link>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

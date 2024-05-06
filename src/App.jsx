@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AllActivities from "./components/AllActivities";
 import AllLocations from "./components/AllLocations";
 import LoginComponent from "./components/LoginComponent";
+import ProfiloUser from "./components/ProfiloUser";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
             ></Route>
 
             <Route path="/login" element={<LoginComponent />}></Route>
+            <Route path="/profile" element={<ProfiloUser />}></Route>
           </Routes>
         </main>
         <footer></footer>
