@@ -4,7 +4,7 @@ const NavbarComponent = () => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href="#">
+        <Navbar.Brand href="/">
           <img
             src="logoHelloWorld.png"
             alt="hello-world-logo"
@@ -18,13 +18,13 @@ const NavbarComponent = () => {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link href="#">Home</Nav.Link>
-            <Nav.Link href="#">Attività</Nav.Link>
-            <Nav.Link href="#">Luoghi</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/activities">Attività</Nav.Link>
+            <Nav.Link href="/locations">Luoghi</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link href="#">Login</Nav.Link>
-            <Nav.Link href="#">Registrati</Nav.Link>
+            <Nav.Link href="/login">Login</Nav.Link>
+            <Nav.Link href="/registrati">Registrati</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

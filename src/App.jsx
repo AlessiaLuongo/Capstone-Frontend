@@ -7,6 +7,7 @@ import SearchBar from "./components/SearchBar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AllActivities from "./components/AllActivities";
 import AllLocations from "./components/AllLocations";
+import LoginComponent from "./components/LoginComponent";
 
 function App() {
   return (
@@ -16,11 +17,36 @@ function App() {
           <NavbarComponent />
         </header>
         <main>
-          <SearchBar />
           <Routes>
-            <Route path="/" element={<Homepage />}></Route>
-            <Route path="/activities" element={<AllActivities />}></Route>
-            <Route path="/locations" element={<AllLocations />}></Route>
+            <Route
+              path="/"
+              element={
+                <>
+                  <SearchBar />
+                  <Homepage />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/activities"
+              element={
+                <>
+                  <SearchBar />
+                  <AllActivities />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/locations"
+              element={
+                <>
+                  <SearchBar />
+                  <AllLocations />
+                </>
+              }
+            ></Route>
+
+            <Route path="/login" element={<LoginComponent />}></Route>
           </Routes>
         </main>
         <footer></footer>
