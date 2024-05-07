@@ -1,7 +1,9 @@
 import { LOGIN } from "../action";
+import { CURRENT_USER } from "../action";
 
 const accessToken = {
   accessToken: "",
+  user: null,
 };
 
 const loginUserReducer = (state = accessToken, action) => {
@@ -11,6 +13,10 @@ const loginUserReducer = (state = accessToken, action) => {
         ...state,
         accessToken: action.payload,
       };
+
+    case CURRENT_USER:
+      return { ...state, user: action.payload };
+
     default:
       return state;
   }

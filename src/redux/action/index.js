@@ -1,12 +1,12 @@
 export const GET_ALL_ACTIVITIES = "GET_ALL_ACTIVITIES";
 export const GET_ALL_LOCATIONS = "GET_ALL_LOCATIONS";
 export const LOGIN = "LOGIN";
+export const CURRENT_USER = "CURRENT_USER";
 
 //-------------------------------------LOGIN-------------------------------------------------//
 
 export const LoginUser = (user) => {
   return async (dispatch) => {
-    console.log("ok");
     const body = JSON.stringify(user);
     const response = await fetch("http://localhost:3001/auth/login", {
       method: "POST",
@@ -17,8 +17,30 @@ export const LoginUser = (user) => {
     });
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
+
       dispatch({ type: LOGIN, payload: data.accessToken });
+    } else {
+      throw new Error("Problem with Access Token");
+    }
+  };
+};
+
+export const getCurrentUser = (accessToken, id) => {
+  return async (dispatch) => {
+    console.log("ok");
+    const response = await fetch(`http://localhost:3001/users/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    if (response.ok) {
+      const userData = await response.json();
+      console.log("User data:", userData);
+      dispatch({
+        type: CURRENT_USER,
+        payload: userData,
+      });
     } else {
       throw new Error("Problem with Access Token");
     }
