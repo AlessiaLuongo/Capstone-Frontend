@@ -4,11 +4,13 @@ import storage from "redux-persist/lib/storage"; // Default: localStorage for we
 import getAllActivities from "../reducers/getAllActivities";
 import getAllLocations from "../reducers/getAllLocations";
 import loginUserReducer from "../reducers/loginUser";
+import updateActivity from "../reducers/updateSingleActivity";
 
 const rootReducer = combineReducers({
   getAllActivities,
   getAllLocations,
   loginUserReducer,
+  updateActivity,
 });
 
 const persistConfig = {

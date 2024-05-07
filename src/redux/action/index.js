@@ -2,6 +2,7 @@ export const GET_ALL_ACTIVITIES = "GET_ALL_ACTIVITIES";
 export const GET_ALL_LOCATIONS = "GET_ALL_LOCATIONS";
 export const LOGIN = "LOGIN";
 export const CURRENT_USER = "CURRENT_USER";
+export const UPDATE_SINGLE_ACTIVITY = "UPDATE_SINGLE_ACTIVITY";
 
 //-------------------------------------LOGIN-------------------------------------------------//
 
@@ -66,6 +67,34 @@ export const fetchAllActivities = (page = 0, size = 10) => {
       });
     } else {
       throw new Error("Seems there are some Server Problems");
+    }
+  };
+};
+
+export const updateSingleActivity = (activity, body) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/activities/${activity.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(body),
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        dispatch({
+          type: UPDATE_SINGLE_ACTIVITY,
+          payload: data,
+        });
+      } else {
+        throw new Error("Seems there are some Server Problems");
+      }
+    } catch {
+      throw new Error("Some problems with your activity");
     }
   };
 };
