@@ -9,7 +9,7 @@ const updateActivity = (state = initialState, action) => {
     case UPDATE_SINGLE_ACTIVITY:
       return {
         ...state,
-        content: action.payload,
+        content: action.payload.content,
       };
     default:
       return state;

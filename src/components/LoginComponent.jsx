@@ -1,6 +1,6 @@
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { LoginUser } from "../redux/action";
+import { LoginUser, getCurrentUser } from "../redux/action";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +13,7 @@ const LoginComponent = () => {
 
   useEffect(() => {
     if (token) {
+      dispatch(getCurrentUser(token));
       navigate("/");
     }
   }, [token, navigate]);

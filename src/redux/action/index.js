@@ -26,10 +26,10 @@ export const LoginUser = (user) => {
   };
 };
 
-export const getCurrentUser = (accessToken, id) => {
+export const getCurrentUser = (accessToken) => {
   return async (dispatch) => {
     console.log("ok");
-    const response = await fetch(`http://localhost:3001/users/${id}`, {
+    const response = await fetch(`http://localhost:3001/users/me`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -71,21 +71,23 @@ export const fetchAllActivities = (page = 0, size = 10) => {
   };
 };
 
-export const updateSingleActivity = (activity, body) => {
+export const updateSingleActivity = (activityId, updatedActivity) => {
   return async (dispatch) => {
+    console.log("ok");
     try {
       const response = await fetch(
-        `http://localhost:3001/activities/${activity.id}`,
+        `http://localhost:3001/activities/${activityId}`,
         {
           method: "PUT",
           headers: {
             "Content-type": "application/json",
           },
-          body: JSON.stringify(body),
+          body: JSON.stringify(updatedActivity),
         }
       );
       if (response.ok) {
         const data = await response.json();
+        console.log("response:", response);
         dispatch({
           type: UPDATE_SINGLE_ACTIVITY,
           payload: data,
