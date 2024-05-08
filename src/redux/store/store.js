@@ -6,12 +6,14 @@ import getAllLocations from "../reducers/getAllLocations";
 import loginUserReducer from "../reducers/loginUser";
 import updateActivity from "../reducers/updateSingleActivity";
 import persistStore from "redux-persist/es/persistStore";
+import updateLocationReducer from "../reducers/updateSingleLocation";
 
 const rootReducer = combineReducers({
   getAllActivities: getAllActivities,
   getAllLocations: getAllLocations,
   loginUserReducer: loginUserReducer,
   updateActivity: updateActivity,
+  updateLocation: updateLocationReducer,
 });
 
 const persistConfig = {

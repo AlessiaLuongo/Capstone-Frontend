@@ -1,13 +1,32 @@
-import { Col, Container, Image, Row } from "react-bootstrap";
+import { Card, Col, Container, Image, Row } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 const ProfiloUser = () => {
+  const currentUser = useSelector((state) => state.loginUserReducer.user);
+  console.log(currentUser);
+
   return (
     <Container>
-      <Row>
-        <Col xs={6} md={4} lg={3}>
-          <Image src="https://placedog.net/300" roundedCircle />
+      <Row className="my-5 g-3 align-items-center">
+        <Col xs={12} md={5} lg={4}>
+          <Image
+            src={currentUser.avatar}
+            roundedCircle
+            width={"130vh"}
+            height={"130vh"}
+          />
         </Col>
-        <Col xs={6} md={8} lg={9}></Col>
+        <Col xs={12} md={7} lg={8}>
+          <Card border="secondary">
+            <Card.Header>{currentUser.username}</Card.Header>
+            <Card.Body>
+              <Card.Text>
+                {currentUser.name} {""}
+                {currentUser.surname}
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
       </Row>
     </Container>
   );

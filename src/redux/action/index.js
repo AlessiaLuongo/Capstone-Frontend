@@ -3,6 +3,7 @@ export const GET_ALL_LOCATIONS = "GET_ALL_LOCATIONS";
 export const LOGIN = "LOGIN";
 export const CURRENT_USER = "CURRENT_USER";
 export const UPDATE_SINGLE_ACTIVITY = "UPDATE_SINGLE_ACTIVITY";
+export const UPDATE_SINGLE_LOCATION = "UPDATE_SINGLE_LOCATION";
 
 //-------------------------------------LOGIN-------------------------------------------------//
 
@@ -119,6 +120,41 @@ export const fetchAllLocations = (page = 0, size = 10) => {
       });
     } else {
       throw new Error("Seems there are some Server Problems");
+    }
+  };
+};
+
+export const updateSingleLocation = (
+  locationId,
+  updatedLocation,
+  accessToken
+) => {
+  return async (dispatch) => {
+    console.log("ok");
+    try {
+      const response = await fetch(
+        `http://localhost:3001/locations/me/${locationId}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(updatedLocation),
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        console.log("response:", response);
+        dispatch({
+          type: UPDATE_SINGLE_LOCATION,
+          payload: data,
+        });
+      } else {
+        throw new Error("Seems there are some Server Problems");
+      }
+    } catch {
+      throw new Error("Some problems with your location");
     }
   };
 };
