@@ -62,6 +62,7 @@ const SingleActivity = ({ activity }) => {
                   activity={activity}
                   handleClose={handleClose}
                   show={show}
+                  token={userLoggedIn}
                 />
                 {currentUser.id === activity.user.id ? (
                   <i className="bi bi-trash3"></i>

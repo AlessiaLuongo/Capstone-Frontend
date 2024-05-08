@@ -13,22 +13,14 @@ const ModaleModificaLocation = ({ show, handleClose, location, token }) => {
     influxOfPeople: location.influxOfPeople,
   });
 
+  const dispatch = useDispatch();
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     await dispatch(updateSingleLocation(location.id, updatedLocation, token));
-    setUpdatedLocation({
-      title: "",
-      description: "",
-      outdoor: true,
-      price: "",
-      locationType: "",
-      influxOfPeople: "",
-    });
     dispatch(fetchAllLocations());
     handleClose();
   };
-
-  const dispatch = useDispatch();
 
   return (
     <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
@@ -152,10 +144,10 @@ const ModaleModificaLocation = ({ show, handleClose, location, token }) => {
                 });
               }}
             >
-              <option value="">...</option>
-              <option value="1">Bassa</option>
-              <option value="2">Media</option>
-              <option value="3">Alta</option>
+              <option>...</option>
+              <option value="0">Bassa</option>
+              <option value="1">Media</option>
+              <option value="2">Alta</option>
             </Form.Select>
           </FormGroup>
           <Button variant="primary" type="submit">

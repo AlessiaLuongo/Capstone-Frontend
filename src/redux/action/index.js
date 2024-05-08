@@ -72,7 +72,11 @@ export const fetchAllActivities = (page = 0, size = 10) => {
   };
 };
 
-export const updateSingleActivity = (activityId, updatedActivity) => {
+export const updateSingleActivity = (
+  activityId,
+  updatedActivity,
+  accessToken
+) => {
   return async (dispatch) => {
     console.log("ok");
     try {
@@ -81,6 +85,7 @@ export const updateSingleActivity = (activityId, updatedActivity) => {
         {
           method: "PUT",
           headers: {
+            Authorization: `Bearer ${accessToken}`,
             "Content-type": "application/json",
           },
           body: JSON.stringify(updatedActivity),
@@ -130,7 +135,6 @@ export const updateSingleLocation = (
   accessToken
 ) => {
   return async (dispatch) => {
-    console.log("ok");
     try {
       const response = await fetch(
         `http://localhost:3001/locations/me/${locationId}`,
@@ -145,7 +149,6 @@ export const updateSingleLocation = (
       );
       if (response.ok) {
         const data = await response.json();
-        console.log("response:", response);
         dispatch({
           type: UPDATE_SINGLE_LOCATION,
           payload: data,
