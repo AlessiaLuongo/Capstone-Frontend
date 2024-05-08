@@ -6,6 +6,7 @@ export const UPDATE_SINGLE_ACTIVITY = "UPDATE_SINGLE_ACTIVITY";
 export const UPDATE_SINGLE_LOCATION = "UPDATE_SINGLE_LOCATION";
 export const DELETE_SINGLE_ACTIVITY = "DELETE_SINGLE_ACTIVITY";
 export const DELETE_SINGLE_LOCATION = "DELETE_SINGLE_LOCATION";
+export const CREATE_NEW_ACTIVITY = "CREATE_NEW_ACTIVITY";
 
 //-------------------------------------LOGIN-------------------------------------------------//
 
@@ -52,6 +53,30 @@ export const getCurrentUser = (accessToken) => {
 };
 
 //-------------------------------------ACTIVITIES--------------------------------------------//
+
+export const fetchCreateNewActivity = (body, accessToken) => {
+  console.log(accessToken);
+  console.log(body);
+  return async (dispatch) => {
+    const response = await fetch("http://localhost:3001/activities/me", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      dispatch({
+        type: CREATE_NEW_ACTIVITY,
+        payload: data,
+      });
+    } else {
+      throw new Error("Problem with Access Token");
+    }
+  };
+};
 
 export const fetchAllActivities = (page = 0, size = 10) => {
   return async (dispatch) => {

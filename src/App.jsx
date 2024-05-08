@@ -1,7 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.min.css";
 import "./App.css";
-import Homepage from "./components/Homepage";
 import NavbarComponent from "./components/NavbarComponent";
 import SearchBar from "./components/SearchBar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -9,8 +8,13 @@ import AllActivities from "./components/AllActivities";
 import AllLocations from "./components/AllLocations";
 import LoginComponent from "./components/LoginComponent";
 import ProfiloUser from "./components/ProfiloUser";
+import HomepageLoggedUser from "./components/HomepageLoggedUser";
+import { useSelector } from "react-redux";
+import HomepageGuests from "./components/HomepageGuests";
 
 function App() {
+  const loggedUser = useSelector((state) => state.loginUserReducer.accessToken);
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -24,7 +28,7 @@ function App() {
               element={
                 <>
                   <SearchBar />
-                  <Homepage />
+                  {loggedUser ? <HomepageLoggedUser /> : <HomepageGuests />}
                 </>
               }
             ></Route>

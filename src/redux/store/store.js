@@ -9,6 +9,7 @@ import persistStore from "redux-persist/es/persistStore";
 import updateLocationReducer from "../reducers/updateSingleLocation";
 import deleteSingleActivityReducer from "../reducers/deleteSingleActivity";
 import deleteSingleLocationReducer from "../reducers/deleteSingleLocation";
+import createNewActivityReducer from "../reducers/createNewActivity";
 
 const rootReducer = combineReducers({
   getAllActivities: getAllActivities,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   updateLocation: updateLocationReducer,
   deleteActivity: deleteSingleActivityReducer,
   deleteLocation: deleteSingleLocationReducer,
+  createNewActivity: createNewActivityReducer,
 });
 
 const persistConfig = {
