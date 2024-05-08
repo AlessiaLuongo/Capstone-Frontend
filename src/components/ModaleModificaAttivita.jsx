@@ -1,4 +1,4 @@
-import { Button, Form, FormGroup, Modal, ModalFooter } from "react-bootstrap";
+import { Button, Form, FormGroup, Modal } from "react-bootstrap";
 import { fetchAllActivities, updateSingleActivity } from "../redux/action";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -8,7 +8,7 @@ const ModaleModificaAttivita = ({ show, handleClose, activity, token }) => {
     return new Date(date).toISOString().slice(0, 10);
   };
 
-  const [date, setDate] = useState(new Date());
+  // const [date, setDate] = useState(new Date());
 
   const [updatedActivity, setUpdatedActivity] = useState({
     title: activity.title,

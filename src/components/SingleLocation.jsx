@@ -1,7 +1,8 @@
 import { Button, Card, Col } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import ModaleModificaLocation from "./ModaleModificaLocation";
+import { deleteSingleLocation, fetchAllLocations } from "../redux/action";
 
 const SingleLocation = ({ location }) => {
   const dateFormatter = () => {
@@ -29,6 +30,17 @@ const SingleLocation = ({ location }) => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const dispatch = useDispatch();
+
+  const handleDelete = async () => {
+    try {
+      await dispatch(deleteSingleLocation(location.id, userLoggedIn));
+      dispatch(fetchAllLocations());
+    } catch (error) {
+      console.error("Error deleting location");
+    }
+  };
 
   return (
     <Col xs={12} md={6} lg={4}>
@@ -63,7 +75,12 @@ const SingleLocation = ({ location }) => {
                   token={userLoggedIn}
                 />
                 {currentUser.id === location.user.id ? (
-                  <i className="bi bi-trash3"></i>
+                  <i
+                    className="bi bi-trash3"
+                    onClick={() => {
+                      handleDelete();
+                    }}
+                  ></i>
                 ) : (
                   ""
                 )}

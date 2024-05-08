@@ -4,6 +4,8 @@ export const LOGIN = "LOGIN";
 export const CURRENT_USER = "CURRENT_USER";
 export const UPDATE_SINGLE_ACTIVITY = "UPDATE_SINGLE_ACTIVITY";
 export const UPDATE_SINGLE_LOCATION = "UPDATE_SINGLE_LOCATION";
+export const DELETE_SINGLE_ACTIVITY = "DELETE_SINGLE_ACTIVITY";
+export const DELETE_SINGLE_LOCATION = "DELETE_SINGLE_LOCATION";
 
 //-------------------------------------LOGIN-------------------------------------------------//
 
@@ -72,6 +74,8 @@ export const fetchAllActivities = (page = 0, size = 10) => {
   };
 };
 
+//-------------------------------------UPDATE ACTIVITY----------------------------------------//
+
 export const updateSingleActivity = (
   activityId,
   updatedActivity,
@@ -107,6 +111,30 @@ export const updateSingleActivity = (
   };
 };
 
+//-------------------------------------DELETE ACTIVITY---------------------------------------//
+
+export const deleteSingleActivity = (activityId, accessToken) => {
+  return async (dispatch) => {
+    const response = await fetch(
+      `http://localhost:3001/activities/${activityId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-type": "application/json",
+        },
+      }
+    );
+    if (response.ok) {
+      dispatch({
+        type: DELETE_SINGLE_ACTIVITY,
+      });
+    } else {
+      throw new Error("Seems there are some Server Problems");
+    }
+  };
+};
+
 //-------------------------------------LOCATIONS--------------------------------------------//
 export const fetchAllLocations = (page = 0, size = 10) => {
   return async (dispatch) => {
@@ -128,6 +156,8 @@ export const fetchAllLocations = (page = 0, size = 10) => {
     }
   };
 };
+
+//-------------------------------------UPDATE LOCATION---------------------------------------//
 
 export const updateSingleLocation = (
   locationId,
@@ -158,6 +188,29 @@ export const updateSingleLocation = (
       }
     } catch {
       throw new Error("Some problems with your location");
+    }
+  };
+};
+//-------------------------------------DELETE LOCATION---------------------------------------//
+
+export const deleteSingleLocation = (locationId, accessToken) => {
+  return async (dispatch) => {
+    const response = await fetch(
+      `http://localhost:3001/locations/${locationId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-type": "application/json",
+        },
+      }
+    );
+    if (response.ok) {
+      dispatch({
+        type: DELETE_SINGLE_LOCATION,
+      });
+    } else {
+      throw new Error("Seems there are some Server Problems");
     }
   };
 };

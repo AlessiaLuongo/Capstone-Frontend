@@ -1,9 +1,10 @@
 import { Button, Card, Col } from "react-bootstrap";
 
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import ModaleModificaAttivita from "./ModaleModificaAttivita";
+import { deleteSingleActivity, fetchAllActivities } from "../redux/action";
 
 const SingleActivity = ({ activity }) => {
   const dateFormatter = () => {
@@ -31,6 +32,17 @@ const SingleActivity = ({ activity }) => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const dispatch = useDispatch();
+
+  const handleDelete = async () => {
+    try {
+      await dispatch(deleteSingleActivity(activity.id, userLoggedIn));
+      dispatch(fetchAllActivities());
+    } catch (error) {
+      console.error("Error deleting activity");
+    }
+  };
 
   return (
     <Col xs={12} md={6} lg={4}>
@@ -65,7 +77,12 @@ const SingleActivity = ({ activity }) => {
                   token={userLoggedIn}
                 />
                 {currentUser.id === activity.user.id ? (
-                  <i className="bi bi-trash3"></i>
+                  <i
+                    className="bi bi-trash3"
+                    onClick={() => {
+                      handleDelete();
+                    }}
+                  ></i>
                 ) : (
                   ""
                 )}
