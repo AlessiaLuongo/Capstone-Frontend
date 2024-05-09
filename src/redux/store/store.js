@@ -11,6 +11,7 @@ import deleteSingleActivityReducer from "../reducers/deleteSingleActivity";
 import deleteSingleLocationReducer from "../reducers/deleteSingleLocation";
 import createNewActivityReducer from "../reducers/createNewActivity";
 import createNewLocationReducer from "../reducers/createNewLocation";
+import getTheBestActivities from "../reducers/getTheBestActivities";
 
 const rootReducer = combineReducers({
   getAllActivities: getAllActivities,
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   deleteLocation: deleteSingleLocationReducer,
   createNewActivity: createNewActivityReducer,
   createNewLocation: createNewLocationReducer,
+  getTheBestActivities: getTheBestActivities,
 });
 
 const persistConfig = {

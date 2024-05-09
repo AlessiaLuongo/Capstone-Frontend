@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCreateNewLocation } from "../redux/action";
 
 const AddNewLocation = ({ showLocation, handleCloseLocation }) => {
-  const token = useSelector((state) => state.loginUserReducer.accessToken);
-
   const [newLocation, setNewLocation] = useState({
     title: "",
     description: "",
@@ -19,11 +17,13 @@ const AddNewLocation = ({ showLocation, handleCloseLocation }) => {
   });
 
   const dispatch = useDispatch();
-
+  const token = useSelector((state) => state.loginUserReducer.accessToken);
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(fetchCreateNewLocation(newLocation, token));
   };
+
+  //----------------------------------------------------------------------------------------------//
 
   return (
     <Modal

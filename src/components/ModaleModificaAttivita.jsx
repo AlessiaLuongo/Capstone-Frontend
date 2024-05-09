@@ -21,7 +21,6 @@ const ModaleModificaAttivita = ({ show, handleClose, activity, token }) => {
   });
 
   const dispatch = useDispatch();
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     await dispatch(updateSingleActivity(activity.id, updatedActivity, token));
@@ -29,6 +28,7 @@ const ModaleModificaAttivita = ({ show, handleClose, activity, token }) => {
     handleClose();
   };
 
+  //----------------------------------------------------------------------------------------------//
   return (
     <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
       <Modal.Header closeButton>

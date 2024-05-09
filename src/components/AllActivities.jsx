@@ -15,6 +15,8 @@ const AllActivities = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //----------------------------------------------------------------------------------------------//
+
   return (
     <Container>
       <Row className="justify-content-center align-content-center g-4 mt-3">

@@ -9,7 +9,7 @@ const NavbarComponent = () => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href="/">
+        <Navbar.Brand href="/homepage">
           <img
             src="logoHelloWorld.png"
             alt="hello-world-logo"
@@ -23,7 +23,7 @@ const NavbarComponent = () => {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/homepage">Home</Nav.Link>
             <Nav.Link href="/activities">Attività</Nav.Link>
             <Nav.Link href="/locations">Luoghi</Nav.Link>
           </Nav>

@@ -8,15 +8,16 @@ const LoginComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [login, setLogin] = useState({ email: "", password: "" });
-
   const token = useSelector((state) => state.loginUserReducer.accessToken);
 
   useEffect(() => {
     if (token) {
       dispatch(getCurrentUser(token));
-      navigate("/");
+      navigate("/homepage");
     }
   }, [token, navigate]);
+
+  //----------------------------------------------------------------------------------------------//
 
   return (
     <Container className="m-5">

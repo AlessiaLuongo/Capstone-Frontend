@@ -1,9 +1,10 @@
 import { Col, Container, Row } from "react-bootstrap";
 
 const HomepageGuests = () => {
+  //----------------------------------------------------------------------------------------------//
   return (
     <Container>
-      <Row>
+      <Row className="m-4">
         <Col xs={12} md={7} lg={5}>
           HOMEPAGE GUESTS
         </Col>

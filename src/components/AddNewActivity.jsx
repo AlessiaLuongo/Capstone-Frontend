@@ -8,8 +8,6 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
     return new Date(date).toISOString().slice(0, 10);
   };
 
-  const token = useSelector((state) => state.loginUserReducer.accessToken);
-
   const [newActivity, setNewActivity] = useState({
     title: "",
     description: "",
@@ -21,12 +19,14 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
     rate: 0,
   });
 
+  const token = useSelector((state) => state.loginUserReducer.accessToken);
   const dispatch = useDispatch();
-
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(fetchCreateNewActivity(newActivity, token));
   };
+
+  //----------------------------------------------------------------------------------------------//
 
   return (
     <Modal

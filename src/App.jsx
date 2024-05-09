@@ -24,12 +24,9 @@ function App() {
         <main>
           <Routes>
             <Route
-              path="/"
+              path="/homepage"
               element={
-                <>
-                  <SearchBar />
-                  {loggedUser ? <HomepageLoggedUser /> : <HomepageGuests />}
-                </>
+                <>{loggedUser ? <HomepageLoggedUser /> : <HomepageGuests />}</>
               }
             ></Route>
             <Route
