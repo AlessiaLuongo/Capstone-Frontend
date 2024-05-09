@@ -1,6 +1,6 @@
 import { Card, Col } from "react-bootstrap";
 
-const SingleBESTActivity = ({ bestActivity }) => {
+const SingleBESTPost = ({ bestPost }) => {
   const dateFormatter = () => {
     return new Date().toISOString().slice(0, 10).split("-").reverse().join("/");
   };
@@ -8,7 +8,7 @@ const SingleBESTActivity = ({ bestActivity }) => {
   const rateHearts = () => {
     const hearts = [];
     for (let i = 1; i <= 5; i++) {
-      if (i <= bestActivity.rate) {
+      if (i <= bestPost.rate) {
         hearts.push(<i key={i} className="bi bi-suit-heart-fill"></i>);
       } else {
         hearts.push(<i key={i} className="bi bi-suit-heart"></i>);
@@ -18,23 +18,23 @@ const SingleBESTActivity = ({ bestActivity }) => {
   };
 
   return (
-    <Col xs={12} md={6} lg={4}>
+    <Col xs={12} md={6} lg={2}>
       <Card>
         <Card.Img variant="top" src={""} />
         <Card.Body>
           <Card.Subtitle className="mb-2 text-muted text-end">
-            {dateFormatter(bestActivity.creationDate)}
+            {dateFormatter(bestPost.creationDate)}
           </Card.Subtitle>
-          <Card.Title>{bestActivity.title}</Card.Title>
+          <Card.Title>{bestPost.title}</Card.Title>
           <hr />
           <Card.Subtitle className="mb-2 text-muted text-end">
-            {rateHearts(bestActivity.rate)}
+            {rateHearts(bestPost.rate)}
           </Card.Subtitle>
-          <Card.Text>{bestActivity.description}</Card.Text>
+          <Card.Text>{bestPost.description}</Card.Text>
         </Card.Body>
       </Card>
     </Col>
   );
 };
 
-export default SingleBESTActivity;
+export default SingleBESTPost;

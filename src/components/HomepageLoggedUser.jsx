@@ -3,8 +3,8 @@ import { Alert, Button, Col, Container, Row } from "react-bootstrap";
 import AddNewActivity from "./AddNewActivity";
 import AddNewLocation from "./AddNewLocation";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTheTenBestActivities } from "../redux/action";
-import SingleBESTActivity from "./SingleBESTActivity";
+import { fetchTheBestPosts } from "../redux/action";
+import SingleBESTPost from "./SingleBESTPost";
 
 const HomepageLoggedUser = () => {
   const [showActivity, setShowActivity] = useState(false);
@@ -17,14 +17,11 @@ const HomepageLoggedUser = () => {
   const handleCloseLocation = () => setShowLocation(false);
 
   const dispatch = useDispatch();
-  const listOfTheBest = useSelector(
-    (state) => state.getTheBestActivities.content
-  );
+  const listOfTheBest = useSelector((state) => state.getTheBestPost);
 
   useEffect(() => {
-    dispatch(fetchTheTenBestActivities());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatch(fetchTheBestPosts());
+  }, [dispatch]);
 
   //----------------------------------------------------------------------------------------------//
   return (
@@ -62,7 +59,7 @@ const HomepageLoggedUser = () => {
         {listOfTheBest && listOfTheBest.length > 0 ? (
           listOfTheBest.map((bestActivity) => {
             return (
-              <SingleBESTActivity
+              <SingleBESTPost
                 key={bestActivity.id}
                 bestActivity={bestActivity}
               />

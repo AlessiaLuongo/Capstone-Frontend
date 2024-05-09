@@ -8,7 +8,7 @@ export const DELETE_SINGLE_ACTIVITY = "DELETE_SINGLE_ACTIVITY";
 export const DELETE_SINGLE_LOCATION = "DELETE_SINGLE_LOCATION";
 export const CREATE_NEW_ACTIVITY = "CREATE_NEW_ACTIVITY";
 export const CREATE_NEW_LOCATION = "CREATE_NEW_LOCATION";
-export const GET_THE_BEST_ACTIVITIES = "GET_THE_BEST_ACTIVITIES";
+export const GET_THE_BEST_POSTS = "GET_THE_BEST_POSTS";
 
 //-------------------------------------LOGIN-------------------------------------------------//
 
@@ -72,29 +72,6 @@ export const fetchAllActivities = (page = 0, size = 10) => {
       dispatch({
         type: GET_ALL_ACTIVITIES,
         payload: { content, pageable, page, size },
-      });
-    } else {
-      throw new Error("Seems there are some Server Problems");
-    }
-  };
-};
-
-//-------------------------------------GET THE 10 BEST ACTIVITIES--------------------------------------------//
-
-export const fetchTheTenBestActivities = () => {
-  return async (dispatch) => {
-    const response = await fetch("http://localhost:3001/homepage", {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-      },
-    });
-    if (response.ok) {
-      const data = await response.json();
-      console.log("data", data);
-      dispatch({
-        type: GET_THE_BEST_ACTIVITIES,
-        payload: data,
       });
     } else {
       throw new Error("Seems there are some Server Problems");
@@ -291,6 +268,28 @@ export const deleteSingleLocation = (locationId, accessToken) => {
     if (response.ok) {
       dispatch({
         type: DELETE_SINGLE_LOCATION,
+      });
+    } else {
+      throw new Error("Seems there are some Server Problems");
+    }
+  };
+};
+//-------------------------------------GET THE BEST POSTS--------------------------------------------//
+
+export const fetchTheBestPosts = () => {
+  return async (dispatch) => {
+    const response = await fetch("http://localhost:3001/homepage", {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      console.log("data", data);
+      dispatch({
+        type: GET_THE_BEST_POSTS,
+        payload: data,
       });
     } else {
       throw new Error("Seems there are some Server Problems");
