@@ -1,43 +1,40 @@
 import { useState } from "react";
 import { Button, Form, FormGroup, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCreateNewActivity } from "../redux/action";
+import { fetchCreateNewLocation } from "../redux/action";
 
-const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
-  const formattedDateToSendBack = (date) => {
-    return new Date(date).toISOString().slice(0, 10);
-  };
-
+const AddNewLocation = ({ showLocation, handleCloseLocation }) => {
   const token = useSelector((state) => state.loginUserReducer.accessToken);
 
-  const [newActivity, setNewActivity] = useState({
+  const [newLocation, setNewLocation] = useState({
     title: "",
     description: "",
     outdoor: true,
     price: "",
     startDate: new Date(),
     endDate: new Date(),
-    eventType: "",
     rate: 0,
+    locationType: "",
+    influxOfPeople: "",
   });
 
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(fetchCreateNewActivity(newActivity, token));
+    dispatch(fetchCreateNewLocation(newLocation, token));
   };
 
   return (
     <Modal
-      show={showActivity}
-      onHide={handleCloseActivity}
+      show={showLocation}
+      onHide={handleCloseLocation}
       backdrop="static"
       keyboard={false}
       size="lg"
     >
       <Modal.Header closeButton>
-        <Modal.Title>Condividi una nuova attività!</Modal.Title>
+        <Modal.Title>Condividi un nuovo luogo!</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
@@ -46,9 +43,9 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
             <Form.Control
               type="text"
               placeholder="Titolo"
-              value={newActivity.title}
+              value={newLocation.title}
               onChange={(e) => {
-                setNewActivity({ ...newActivity, title: e.target.value });
+                setNewLocation({ ...newLocation, title: e.target.value });
               }}
             />
             <Form.Text className="text-muted"></Form.Text>
@@ -59,9 +56,9 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
             <Form.Control
               as="textarea"
               rows={2}
-              value={newActivity.description}
+              value={newLocation.description}
               onChange={(e) => {
-                setNewActivity({ ...newActivity, description: e.target.value });
+                setNewLocation({ ...newLocation, description: e.target.value });
               }}
             />
           </Form.Group>
@@ -71,9 +68,9 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
             <Form.Control
               type="text"
               placeholder="Prezzo"
-              value={newActivity.price}
+              value={newLocation.price}
               onChange={(e) => {
-                setNewActivity({ ...newActivity, price: e.target.value });
+                setNewLocation({ ...newLocation, price: e.target.value });
               }}
             />
             <Form.Text className="text-muted"></Form.Text>
@@ -84,28 +81,28 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
               <div key={`inline-${type}`} className="mb-3">
                 <Form.Check
                   inline
-                  label="Attività Indoor"
+                  label="Location Indoor"
                   name="group1"
                   type={type}
                   id={`inline-${type}-1`}
-                  checked={newActivity.indoor}
+                  checked={newLocation.indoor}
                   onChange={(e) =>
-                    setNewActivity({
-                      ...newActivity,
+                    setNewLocation({
+                      ...newLocation,
                       outdoor: e.target.value === "Indoow" ? true : false,
                     })
                   }
                 />
                 <Form.Check
                   inline
-                  label="Attività Outdoor"
+                  label="Location Outdoor"
                   name="group1"
                   type={type}
                   id={`inline-${type}-2`}
-                  checked={newActivity.outdoor}
+                  checked={newLocation.outdoor}
                   onChange={(e) =>
-                    setNewActivity({
-                      ...newActivity,
+                    setNewLocation({
+                      ...newLocation,
                       outdoor: e.target.value === "Outdoor" ? true : false,
                     })
                   }
@@ -115,45 +112,43 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
           </Form.Group>
 
           <FormGroup>
-            <Form.Label>Data di inizio</Form.Label>
-            <Form.Control
-              type="date"
-              name="datepic"
-              placeholder="DateRange"
-              value={formattedDateToSendBack(newActivity.startDate)}
-              onChange={(e) => {
-                setNewActivity({ ...newActivity, startDate: e.target.value });
-              }}
-            />
-
-            <Form.Label>Data di fine</Form.Label>
-            <Form.Control
-              type="date"
-              name="datepic"
-              placeholder="DateRange"
-              value={formattedDateToSendBack(newActivity.endDate)}
-              onChange={(e) => {
-                setNewActivity({ ...newActivity, endDate: e.target.value });
-              }}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Form.Label>Scegli il tipo di attività</Form.Label>
+            <Form.Label>Scegli il tipo di luogo</Form.Label>
             <Form.Select
               aria-label="Default select example"
-              value={newActivity.eventType}
+              value={newLocation.location}
               onChange={(e) => {
-                setNewActivity({ ...newActivity, eventType: e.target.value });
+                setNewLocation({
+                  ...newLocation,
+                  locationType: e.target.value,
+                });
               }}
             >
               <option>...</option>
-              <option value="0">Concerto</option>
-              <option value="1">Sportivo</option>
-              <option value="2">Business</option>
-              <option value="3">Culturale</option>
-              <option value="4">Workshop</option>
-              <option value="5">Religiosa</option>
+              <option value="0">Naturalistico</option>
+              <option value="1">Culturale</option>
+              <option value="2">Storico</option>
+              <option value="3">Sportivo</option>
+              <option value="4">Enogastronomico</option>
+              <option value="5">Religioso</option>
               <option value="6">Altro</option>
+            </Form.Select>
+          </FormGroup>
+          <FormGroup>
+            <Form.Label>Quanto affluenza c&#39;è?</Form.Label>
+            <Form.Select
+              aria-label="Default select example"
+              value={newLocation.influxOfPeople}
+              onChange={(e) => {
+                setNewLocation({
+                  ...newLocation,
+                  influxOfPeople: e.target.value,
+                });
+              }}
+            >
+              <option>...</option>
+              <option value="0">Bassa</option>
+              <option value="1">Media</option>
+              <option value="2">Alta</option>
             </Form.Select>
           </FormGroup>
 
@@ -161,9 +156,12 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
             <Form.Label>Quanto ti è piaciuto da 1 a 5?</Form.Label>
             <Form.Select
               aria-label="Default select example"
-              value={newActivity.rate}
+              value={newLocation.rate}
               onChange={(e) => {
-                setNewActivity({ ...newActivity, rate: e.target.value });
+                setNewLocation({
+                  ...newLocation,
+                  rate: e.target.value,
+                });
               }}
             >
               <option>...</option>
@@ -183,4 +181,4 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
     </Modal>
   );
 };
-export default AddNewActivity;
+export default AddNewLocation;

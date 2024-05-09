@@ -7,6 +7,7 @@ export const UPDATE_SINGLE_LOCATION = "UPDATE_SINGLE_LOCATION";
 export const DELETE_SINGLE_ACTIVITY = "DELETE_SINGLE_ACTIVITY";
 export const DELETE_SINGLE_LOCATION = "DELETE_SINGLE_LOCATION";
 export const CREATE_NEW_ACTIVITY = "CREATE_NEW_ACTIVITY";
+export const CREATE_NEW_LOCATION = "CREATE_NEW_LOCATION";
 
 //-------------------------------------LOGIN-------------------------------------------------//
 
@@ -54,6 +55,31 @@ export const getCurrentUser = (accessToken) => {
 
 //-------------------------------------ACTIVITIES--------------------------------------------//
 
+//-------------------------------------GET ALL LOCATIONS--------------------------------------------//
+
+export const fetchAllActivities = (page = 0, size = 10) => {
+  return async (dispatch) => {
+    const response = await fetch("http://localhost:3001/activities", {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      const { content, pageable } = data;
+      dispatch({
+        type: GET_ALL_ACTIVITIES,
+        payload: { content, pageable, page, size },
+      });
+    } else {
+      throw new Error("Seems there are some Server Problems");
+    }
+  };
+};
+
+//------------------------------------CREATE NEW LOCATION--------------------------------------------//
+
 export const fetchCreateNewActivity = (body, accessToken) => {
   console.log(accessToken);
   console.log(body);
@@ -74,27 +100,6 @@ export const fetchCreateNewActivity = (body, accessToken) => {
       });
     } else {
       throw new Error("Problem with Access Token");
-    }
-  };
-};
-
-export const fetchAllActivities = (page = 0, size = 10) => {
-  return async (dispatch) => {
-    const response = await fetch("http://localhost:3001/activities", {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-      },
-    });
-    if (response.ok) {
-      const data = await response.json();
-      const { content, pageable } = data;
-      dispatch({
-        type: GET_ALL_ACTIVITIES,
-        payload: { content, pageable, page, size },
-      });
-    } else {
-      throw new Error("Seems there are some Server Problems");
     }
   };
 };
@@ -161,6 +166,9 @@ export const deleteSingleActivity = (activityId, accessToken) => {
 };
 
 //-------------------------------------LOCATIONS--------------------------------------------//
+
+//-------------------------------------GET ALL LOCATIONS--------------------------------------------//
+
 export const fetchAllLocations = (page = 0, size = 10) => {
   return async (dispatch) => {
     const response = await fetch("http://localhost:3001/locations", {
@@ -178,6 +186,32 @@ export const fetchAllLocations = (page = 0, size = 10) => {
       });
     } else {
       throw new Error("Seems there are some Server Problems");
+    }
+  };
+};
+
+//------------------------------------CREATE NEW LOCATION--------------------------------------------//
+
+export const fetchCreateNewLocation = (body, accessToken) => {
+  console.log(accessToken);
+  console.log(body);
+  return async (dispatch) => {
+    const response = await fetch("http://localhost:3001/locations/me", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      dispatch({
+        type: CREATE_NEW_LOCATION,
+        payload: data,
+      });
+    } else {
+      throw new Error("Problem with Access Token");
     }
   };
 };
