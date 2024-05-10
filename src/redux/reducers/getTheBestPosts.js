@@ -9,7 +9,7 @@ const getTheBestPosts = (state = initialState, action) => {
     case GET_THE_BEST_POSTS:
       return {
         ...state,
-        content: action.payload,
+        content: action.payload.data,
       };
 
     default:

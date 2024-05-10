@@ -286,10 +286,10 @@ export const fetchTheBestPosts = () => {
     });
     if (response.ok) {
       const data = await response.json();
-      console.log("data", data);
+
       dispatch({
         type: GET_THE_BEST_POSTS,
-        payload: data,
+        payload: { data },
       });
     } else {
       throw new Error("Seems there are some Server Problems");
