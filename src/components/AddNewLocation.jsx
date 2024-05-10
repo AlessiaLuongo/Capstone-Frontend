@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCreateNewLocation } from "../redux/action";
+import { fetchCreateNewLocation, fetchTheBestPosts } from "../redux/action";
 
 const AddNewLocation = ({ showLocation, handleCloseLocation }) => {
   const [newLocation, setNewLocation] = useState({
@@ -21,7 +21,13 @@ const AddNewLocation = ({ showLocation, handleCloseLocation }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(fetchCreateNewLocation(newLocation, token));
+    dispatch(fetchTheBestPosts());
+    handleCloseLocation();
   };
+
+  useEffect(() => {
+    dispatch(fetchTheBestPosts());
+  }, []);
 
   //----------------------------------------------------------------------------------------------//
 

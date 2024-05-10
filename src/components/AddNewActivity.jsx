@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCreateNewActivity } from "../redux/action";
+import { fetchCreateNewActivity, fetchTheBestPosts } from "../redux/action";
 
 const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
   const formattedDateToSendBack = (date) => {
@@ -21,11 +21,17 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
 
   const token = useSelector((state) => state.loginUserReducer.accessToken);
   const dispatch = useDispatch();
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(fetchCreateNewActivity(newActivity, token));
+    await dispatch(fetchCreateNewActivity(newActivity, token));
+
+    dispatch(fetchTheBestPosts());
+    handleCloseActivity();
   };
 
+  useEffect(() => {
+    dispatch(fetchTheBestPosts());
+  }, []);
   //----------------------------------------------------------------------------------------------//
 
   return (
