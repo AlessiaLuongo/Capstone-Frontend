@@ -20,7 +20,7 @@ const AllActivities = () => {
   return (
     <Container>
       <Row className="justify-content-center align-content-center g-4 mt-3">
-        {listaActivities.length > 0 ? (
+        {listaActivities && listaActivities.length > 0 ? (
           listaActivities.map((activity) => (
             <SingleActivity key={activity.id} activity={activity} />
           ))

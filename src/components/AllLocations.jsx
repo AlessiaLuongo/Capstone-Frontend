@@ -18,7 +18,7 @@ const AllLocations = () => {
   return (
     <Container>
       <Row className="justify-content-center align-content-center g-4 mt-3">
-        {listaLocations.length > 0 ? (
+        {listaLocations && listaLocations.length > 0 ? (
           listaLocations.map((location) => {
             return <SingleLocation key={location.id} location={location} />;
           })
