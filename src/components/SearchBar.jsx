@@ -1,17 +1,30 @@
 import { Button, Col, Form, Row } from "react-bootstrap";
 
-const SearchBar = () => {
+const SearchBar = ({ onSearch, inputValue, setInputValue }) => {
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSearch(inputValue);
+  };
+
   return (
     <Row className="justify-content-center align-content-center m-4">
       <Col xs={12} md={8} lg={6}>
-        <Form className="d-flex">
+        <Form className="d-flex" onSubmit={handleSubmit}>
           <Form.Control
             type="search"
             placeholder="Cerca su HelloWorld"
             className="me-2"
             aria-label="Search"
+            value={inputValue}
+            onChange={handleInputChange}
           />
-          <Button variant="outline-dark">Cerca</Button>
+          <Button variant="outline-dark" type="submit">
+            Cerca
+          </Button>
         </Form>
       </Col>
     </Row>
