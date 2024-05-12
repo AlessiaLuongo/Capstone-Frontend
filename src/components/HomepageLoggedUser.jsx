@@ -23,15 +23,17 @@ const HomepageLoggedUser = () => {
   const bestPosts = [];
 
   const putAllPostsTogether = () => {
-    for (let i = 0; i < listOfTheBestActivities.length; i++) {
-      const bestActivity = listOfTheBestActivities[i];
-      bestPosts.push(bestActivity);
+    if (listOfTheBestActivities && listOfTheBestLocations) {
+      for (let i = 0; i < listOfTheBestActivities.length; i++) {
+        const bestActivity = listOfTheBestActivities[i];
+        bestPosts.push(bestActivity);
+      }
+      for (let i = 0; i < listOfTheBestLocations.length; i++) {
+        const bestLocation = listOfTheBestLocations[i];
+        bestPosts.push(bestLocation);
+      }
+      return bestPosts;
     }
-    for (let i = 0; i < listOfTheBestLocations.length; i++) {
-      const bestLocation = listOfTheBestLocations[i];
-      bestPosts.push(bestLocation);
-    }
-    return bestPosts;
   };
   putAllPostsTogether();
 
