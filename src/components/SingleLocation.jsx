@@ -42,55 +42,128 @@ const SingleLocation = ({ location }) => {
     }
   };
 
+  const [frontSide, setFrontSide] = useState(true);
+
   return (
     <Col xs={12} md={6} lg={4}>
-      <Card>
-        <Card.Img variant="top" src={""} />
-        <Card.Body>
-          <Card.Subtitle className="mb-2 text-muted text-end">
-            {dateFormatter(location.creationDate)}
-          </Card.Subtitle>
-          <Card.Title>{location.title}</Card.Title>
-          <hr />
-          <Card.Subtitle className="mb-2 text-muted text-end">
-            {rateHearts(location.rate)}
-          </Card.Subtitle>
-          <Card.Text>{location.description}</Card.Text>
-          <div className="d-flex align-items-end justify-content-between">
-            <div>
-              <Button variant="outline-dark">Più dettagli</Button>
-            </div>
-
-            {userLoggedIn ? (
+      {frontSide ? (
+        <Card>
+          <Card.Img variant="top" src={""} />
+          <Card.Body>
+            <Card.Subtitle className="mb-2 text-muted text-end">
+              {dateFormatter(location.creationDate)}
+            </Card.Subtitle>
+            <Card.Title>{location.title}</Card.Title>
+            <hr />
+            <Card.Subtitle className="mb-2 text-muted text-end">
+              {rateHearts(location.rate)}
+            </Card.Subtitle>
+            <Card.Text>{location.description}</Card.Text>
+            <div className="d-flex align-items-end justify-content-between">
               <div>
-                {currentUser.id === location.user.id ? (
-                  <i className="bi bi-vector-pen me-2" onClick={handleShow}></i>
-                ) : (
-                  " "
-                )}
-                <ModaleModificaLocation
-                  location={location}
-                  handleClose={handleClose}
-                  show={show}
-                  token={userLoggedIn}
-                />
-                {currentUser.id === location.user.id ? (
-                  <i
-                    className="bi bi-trash3"
-                    onClick={() => {
-                      handleDelete();
-                    }}
-                  ></i>
-                ) : (
-                  ""
-                )}
+                <Button
+                  variant="outline-dark"
+                  onClick={() => setFrontSide(false)}
+                >
+                  Più dettagli
+                </Button>
               </div>
-            ) : (
-              ""
-            )}
-          </div>
-        </Card.Body>
-      </Card>
+
+              {userLoggedIn ? (
+                <div>
+                  {currentUser.id === location.user.id ? (
+                    <i
+                      className="bi bi-vector-pen me-2"
+                      onClick={handleShow}
+                    ></i>
+                  ) : (
+                    " "
+                  )}
+                  <ModaleModificaLocation
+                    location={location}
+                    handleClose={handleClose}
+                    show={show}
+                    token={userLoggedIn}
+                  />
+                  {currentUser.id === location.user.id ? (
+                    <i
+                      className="bi bi-trash3"
+                      onClick={() => {
+                        handleDelete();
+                      }}
+                    ></i>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+          </Card.Body>
+        </Card>
+      ) : (
+        <Card>
+          <Card.Img variant="top" src={""} />
+          <Card.Body>
+            <Card.Subtitle className="mb-2 text-muted text-end">
+              {dateFormatter(location.creationDate)}
+            </Card.Subtitle>
+            <Card.Title>{location.title}</Card.Title>
+            <hr />
+            <Card.Subtitle className="mb-2 text-muted text-end">
+              {rateHearts(location.rate)}
+            </Card.Subtitle>
+            <Card.Text>{location.description}</Card.Text>
+            <Card.Text>{location.outdoor}</Card.Text>
+            <Card.Text>{location.price}</Card.Text>
+            <Card.Text>{location.locationType}</Card.Text>
+            <Card.Text>{location.influxOfPeople}</Card.Text>
+
+            <div className="d-flex align-items-end justify-content-between">
+              <div>
+                <Button
+                  variant="outline-dark"
+                  onClick={() => setFrontSide(true)}
+                >
+                  Torna indietro
+                </Button>
+              </div>
+
+              {userLoggedIn ? (
+                <div>
+                  {currentUser.id === location.user.id ? (
+                    <i
+                      className="bi bi-vector-pen me-2"
+                      onClick={handleShow}
+                    ></i>
+                  ) : (
+                    " "
+                  )}
+                  <ModaleModificaLocation
+                    location={location}
+                    handleClose={handleClose}
+                    show={show}
+                    token={userLoggedIn}
+                  />
+                  {currentUser.id === location.user.id ? (
+                    <i
+                      className="bi bi-trash3"
+                      onClick={() => {
+                        handleDelete();
+                      }}
+                    ></i>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+          </Card.Body>
+        </Card>
+      )}
     </Col>
   );
 };
