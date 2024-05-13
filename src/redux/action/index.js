@@ -202,6 +202,7 @@ export const fetchAllLocations = (page = 0, size = 10) => {
     if (response.ok) {
       const data = await response.json();
       const { content, pageable } = data;
+      console.log(data);
       dispatch({
         type: GET_ALL_LOCATIONS,
         payload: { content, pageable, page, size },

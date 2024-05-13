@@ -1,8 +1,14 @@
 import { Card, Col } from "react-bootstrap";
 
 const SingleBESTPost = ({ bestPost }) => {
-  const dateFormatter = () => {
-    return new Date().toISOString().slice(0, 10).split("-").reverse().join("/");
+  const dateFormatter = (date) => {
+    const formattedDate = new Date(date)
+      .toISOString()
+      .slice(0, 10)
+      .split("-")
+      .reverse()
+      .join("/");
+    return formattedDate;
   };
 
   const rateHearts = () => {

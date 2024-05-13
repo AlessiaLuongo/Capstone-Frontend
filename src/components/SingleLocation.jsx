@@ -5,8 +5,14 @@ import ModaleModificaLocation from "./ModaleModificaLocation";
 import { deleteSingleLocation, fetchAllLocations } from "../redux/action";
 
 const SingleLocation = ({ location }) => {
-  const dateFormatter = () => {
-    return new Date().toISOString().slice(0, 10).split("-").reverse().join("/");
+  const dateFormatter = (date) => {
+    const formattedDate = new Date(date)
+      .toISOString()
+      .slice(0, 10)
+      .split("-")
+      .reverse()
+      .join("/");
+    return formattedDate;
   };
 
   const rateHearts = () => {
