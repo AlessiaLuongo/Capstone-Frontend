@@ -6,41 +6,26 @@ import SingleBESTPost from "./SingleBESTPost";
 
 const HomepageGuests = () => {
   const dispatch = useDispatch();
-  const listOfTheBest = useSelector((state) => state.getTheBestPosts);
-  const listOfTheBestActivities = listOfTheBest.content[0];
-  const listOfTheBestLocations = listOfTheBest.content[1];
+  const listOfTheBest = useSelector((state) => state.getTheBestPosts.content);
 
-  const bestPosts = [];
+  console.log(listOfTheBest);
 
-  const putAllPostsTogether = () => {
-    for (let i = 0; i < listOfTheBestActivities.length; i++) {
-      const bestActivity = listOfTheBestActivities[i];
-      bestPosts.push(bestActivity);
-    }
-    for (let i = 0; i < listOfTheBestLocations.length; i++) {
-      const bestLocation = listOfTheBestLocations[i];
-      bestPosts.push(bestLocation);
-    }
-    return bestPosts;
-  };
-  putAllPostsTogether();
+  // const shuffleArray = () => {
+  //   const shuffeldArray = listOfTheBest.sort(() => 0.5 - Math.random());
+  //   return shuffeldArray;
+  // };
 
-  const shuffleArray = () => {
-    const shuffeldArray = bestPosts.sort(() => 0.5 - Math.random());
-    return shuffeldArray;
-  };
-
-  const theBestPosts = shuffleArray();
+  // const theBestPosts = shuffleArray();
 
   useEffect(() => {
     dispatch(fetchTheBestPosts());
-  }, []);
+  }, [dispatch]);
   //----------------------------------------------------------------------------------------------//
   return (
     <Container>
       <Row className="m-4">
-        {theBestPosts && theBestPosts.length > 0 ? (
-          theBestPosts.map((bestPost) => {
+        {listOfTheBest && listOfTheBest.length > 0 ? (
+          listOfTheBest.map((bestPost) => {
             return <SingleBESTPost key={bestPost.id} bestPost={bestPost} />;
           })
         ) : (
