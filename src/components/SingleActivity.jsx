@@ -17,16 +17,16 @@ const SingleActivity = ({ activity }) => {
     return formattedDate;
   };
 
-  const rateHearts = () => {
-    const hearts = [];
+  const rateStar = () => {
+    const star = [];
     for (let i = 1; i <= 5; i++) {
       if (i <= activity.rate) {
-        hearts.push(<i key={i} className="bi bi-suit-heart-fill"></i>);
+        star.push(<i key={i} className="bi bi-star-fill"></i>);
       } else {
-        hearts.push(<i key={i} className="bi bi-suit-heart"></i>);
+        star.push(<i key={i} className="bi bi-star"></i>);
       }
     }
-    return hearts;
+    return star;
   };
 
   const userLoggedIn = useSelector(
@@ -52,19 +52,62 @@ const SingleActivity = ({ activity }) => {
 
   const [frontSide, setFrontSide] = useState(true);
 
+  const [showButtons, setShowButtons] = useState(false);
+
   return (
     <Col xs={12} md={6} lg={4}>
       {frontSide === true ? (
         <Card>
           <Card.Img variant="top" src={""} />
           <Card.Body>
+            {userLoggedIn ? (
+              <CardText className="d-flex">
+                <i
+                  className="bi bi-list me-3"
+                  onClick={() => setShowButtons(!showButtons)}
+                ></i>
+
+                {showButtons === true ? (
+                  <div>
+                    {currentUser.id === activity.user.id ? (
+                      <i
+                        className="bi bi-vector-pen me-2"
+                        onClick={handleShow}
+                      ></i>
+                    ) : (
+                      ""
+                    )}
+                    <ModaleModificaAttivita
+                      activity={activity}
+                      handleClose={handleClose}
+                      show={show}
+                      token={userLoggedIn}
+                    />
+                    {currentUser.id === activity.user.id ? (
+                      <i
+                        className="bi bi-trash3"
+                        onClick={() => {
+                          handleDelete();
+                        }}
+                      ></i>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                ) : (
+                  ""
+                )}
+              </CardText>
+            ) : (
+              ""
+            )}
             <Card.Subtitle className="mb-2 text-muted text-end">
               {dateFormatter(activity.creationDate)}
             </Card.Subtitle>
             <Card.Title>{activity.title}</Card.Title>
             <hr />
             <Card.Subtitle className="mb-2 text-muted text-end">
-              {rateHearts(activity.rate)}
+              {rateStar(activity.rate)}
             </Card.Subtitle>
             <Card.Text>{activity.description}</Card.Text>
             <div className="d-flex align-items-end justify-content-between">
@@ -76,37 +119,6 @@ const SingleActivity = ({ activity }) => {
                   Più dettagli
                 </Button>
               </div>
-
-              {userLoggedIn ? (
-                <div>
-                  {currentUser.id === activity.user.id ? (
-                    <i
-                      className="bi bi-vector-pen me-2"
-                      onClick={handleShow}
-                    ></i>
-                  ) : (
-                    ""
-                  )}
-                  <ModaleModificaAttivita
-                    activity={activity}
-                    handleClose={handleClose}
-                    show={show}
-                    token={userLoggedIn}
-                  />
-                  {currentUser.id === activity.user.id ? (
-                    <i
-                      className="bi bi-trash3"
-                      onClick={() => {
-                        handleDelete();
-                      }}
-                    ></i>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              ) : (
-                ""
-              )}
             </div>
           </Card.Body>
         </Card>
@@ -120,15 +132,15 @@ const SingleActivity = ({ activity }) => {
             <Card.Title>{activity.title}</Card.Title>
             <hr />
             <Card.Subtitle className="mb-2 text-muted text-end">
-              {rateHearts(activity.rate)}
+              {rateStar(activity.rate)}
             </Card.Subtitle>
             <Card.Text>{activity.outdoor}</Card.Text>
             <CardText>{activity.description}</CardText>
-            <CardText>{activity.price}</CardText>
+            <CardText>{activity.price} €</CardText>
             <CardText>
+              Dal{"  "}
               {dateFormatter(activity.startDate)}
-              {" - "}
-              {dateFormatter(activity.endDate)}
+              {"  "} al {dateFormatter(activity.endDate)}
             </CardText>
             <CardText> {activity.eventType}</CardText>
 
@@ -141,37 +153,6 @@ const SingleActivity = ({ activity }) => {
                   Torna indietro
                 </Button>
               </div>
-
-              {userLoggedIn ? (
-                <div>
-                  {currentUser.id === activity.user.id ? (
-                    <i
-                      className="bi bi-vector-pen me-2"
-                      onClick={handleShow}
-                    ></i>
-                  ) : (
-                    ""
-                  )}
-                  <ModaleModificaAttivita
-                    activity={activity}
-                    handleClose={handleClose}
-                    show={show}
-                    token={userLoggedIn}
-                  />
-                  {currentUser.id === activity.user.id ? (
-                    <i
-                      className="bi bi-trash3"
-                      onClick={() => {
-                        handleDelete();
-                      }}
-                    ></i>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              ) : (
-                ""
-              )}
             </div>
           </Card.Body>
         </Card>

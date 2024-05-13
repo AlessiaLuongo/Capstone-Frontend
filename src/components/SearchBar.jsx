@@ -1,4 +1,4 @@
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Col, Form, Row } from "react-bootstrap";
 
 const SearchBar = ({ onSearch, inputValue, setInputValue }) => {
   const handleInputChange = (e) => {
@@ -22,9 +22,6 @@ const SearchBar = ({ onSearch, inputValue, setInputValue }) => {
             value={inputValue}
             onChange={handleInputChange}
           />
-          <Button variant="outline-dark" type="submit">
-            Cerca
-          </Button>
         </Form>
       </Col>
     </Row>

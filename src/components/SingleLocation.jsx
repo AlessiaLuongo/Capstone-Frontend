@@ -1,4 +1,4 @@
-import { Button, Card, Col } from "react-bootstrap";
+import { Button, Card, CardText, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import ModaleModificaLocation from "./ModaleModificaLocation";
@@ -15,16 +15,16 @@ const SingleLocation = ({ location }) => {
     return formattedDate;
   };
 
-  const rateHearts = () => {
-    const hearts = [];
+  const rateStar = () => {
+    const star = [];
     for (let i = 1; i <= 5; i++) {
       if (i <= location.rate) {
-        hearts.push(<i key={i} className="bi bi-suit-heart-fill"></i>);
+        star.push(<i key={i} className="bi bi-star-fill"></i>);
       } else {
-        hearts.push(<i key={i} className="bi bi-suit-heart"></i>);
+        star.push(<i key={i} className="bi bi-star"></i>);
       }
     }
-    return hearts;
+    return star;
   };
 
   const userLoggedIn = useSelector(
@@ -50,19 +50,54 @@ const SingleLocation = ({ location }) => {
 
   const [frontSide, setFrontSide] = useState(true);
 
+  const [showButtons, setShowButtons] = useState(false);
+
   return (
     <Col xs={12} md={6} lg={4}>
       {frontSide ? (
         <Card>
           <Card.Img variant="top" src={""} />
           <Card.Body>
+            {userLoggedIn && (
+              <CardText className="d-flex">
+                <i
+                  className="bi bi-list me-3"
+                  onClick={() => setShowButtons(!showButtons)}
+                ></i>
+                {showButtons && (
+                  <div>
+                    {currentUser.id === location.user.id && (
+                      <>
+                        <i
+                          className="bi bi-vector-pen me-2"
+                          onClick={handleShow}
+                        ></i>
+                        <ModaleModificaLocation
+                          location={location}
+                          handleClose={handleClose}
+                          show={show}
+                          token={userLoggedIn}
+                        />
+                        <i
+                          className="bi bi-trash3"
+                          onClick={() => {
+                            handleDelete();
+                          }}
+                        ></i>
+                      </>
+                    )}
+                  </div>
+                )}
+              </CardText>
+            )}
+
             <Card.Subtitle className="mb-2 text-muted text-end">
               {dateFormatter(location.creationDate)}
             </Card.Subtitle>
             <Card.Title>{location.title}</Card.Title>
             <hr />
             <Card.Subtitle className="mb-2 text-muted text-end">
-              {rateHearts(location.rate)}
+              {rateStar(location.rate)}
             </Card.Subtitle>
             <Card.Text>{location.description}</Card.Text>
             <div className="d-flex align-items-end justify-content-between">
@@ -74,37 +109,6 @@ const SingleLocation = ({ location }) => {
                   Più dettagli
                 </Button>
               </div>
-
-              {userLoggedIn ? (
-                <div>
-                  {currentUser.id === location.user.id ? (
-                    <i
-                      className="bi bi-vector-pen me-2"
-                      onClick={handleShow}
-                    ></i>
-                  ) : (
-                    " "
-                  )}
-                  <ModaleModificaLocation
-                    location={location}
-                    handleClose={handleClose}
-                    show={show}
-                    token={userLoggedIn}
-                  />
-                  {currentUser.id === location.user.id ? (
-                    <i
-                      className="bi bi-trash3"
-                      onClick={() => {
-                        handleDelete();
-                      }}
-                    ></i>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              ) : (
-                ""
-              )}
             </div>
           </Card.Body>
         </Card>
@@ -118,7 +122,7 @@ const SingleLocation = ({ location }) => {
             <Card.Title>{location.title}</Card.Title>
             <hr />
             <Card.Subtitle className="mb-2 text-muted text-end">
-              {rateHearts(location.rate)}
+              {rateStar(location.rate)}
             </Card.Subtitle>
             <Card.Text>{location.description}</Card.Text>
             <Card.Text>{location.outdoor}</Card.Text>
@@ -136,35 +140,22 @@ const SingleLocation = ({ location }) => {
                 </Button>
               </div>
 
-              {userLoggedIn ? (
-                <div>
-                  {currentUser.id === location.user.id ? (
-                    <i
-                      className="bi bi-vector-pen me-2"
-                      onClick={handleShow}
-                    ></i>
-                  ) : (
-                    " "
-                  )}
+              {userLoggedIn && currentUser.id === location.user.id && (
+                <>
+                  <i className="bi bi-vector-pen me-2" onClick={handleShow}></i>
                   <ModaleModificaLocation
                     location={location}
                     handleClose={handleClose}
                     show={show}
                     token={userLoggedIn}
                   />
-                  {currentUser.id === location.user.id ? (
-                    <i
-                      className="bi bi-trash3"
-                      onClick={() => {
-                        handleDelete();
-                      }}
-                    ></i>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              ) : (
-                ""
+                  <i
+                    className="bi bi-trash3"
+                    onClick={() => {
+                      handleDelete();
+                    }}
+                  ></i>
+                </>
               )}
             </div>
           </Card.Body>
@@ -173,5 +164,4 @@ const SingleLocation = ({ location }) => {
     </Col>
   );
 };
-
 export default SingleLocation;

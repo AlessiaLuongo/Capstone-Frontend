@@ -38,7 +38,7 @@ const HomepageLoggedUser = () => {
             variant="outline-secondary"
             onClick={handleShowAddNewLocation}
           >
-            <i className="bi bi-plus-circle"></i> Location
+            <i className="bi bi-plus-circle"></i> Luogo
           </Button>
         </Col>
         {showActivity && (

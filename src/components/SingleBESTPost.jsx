@@ -11,16 +11,16 @@ const SingleBESTPost = ({ bestPost }) => {
     return formattedDate;
   };
 
-  const rateHearts = () => {
-    const hearts = [];
+  const rateStar = () => {
+    const star = [];
     for (let i = 1; i <= 5; i++) {
       if (i <= bestPost.rate) {
-        hearts.push(<i key={i} className="bi bi-suit-heart-fill"></i>);
+        star.push(<i key={i} className="bi bi-star-fill"></i>);
       } else {
-        hearts.push(<i key={i} className="bi bi-suit-heart"></i>);
+        star.push(<i key={i} className="bi bi-star"></i>);
       }
     }
-    return hearts;
+    return star;
   };
 
   return (
@@ -34,7 +34,7 @@ const SingleBESTPost = ({ bestPost }) => {
           <Card.Title>{bestPost.title}</Card.Title>
           <hr />
           <Card.Subtitle className="mb-2 text-muted text-end">
-            {rateHearts(bestPost.rate)}
+            {rateStar(bestPost.rate)}
           </Card.Subtitle>
           <Card.Text>{bestPost.description}</Card.Text>
         </Card.Body>
