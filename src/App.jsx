@@ -10,6 +10,7 @@ import ProfiloUser from "./components/ProfiloUser";
 import HomepageLoggedUser from "./components/HomepageLoggedUser";
 import { useSelector } from "react-redux";
 import HomepageGuests from "./components/HomepageGuests";
+import RegisterComponent from "./components/RegisterComponent";
 
 function App() {
   const loggedUser = useSelector((state) => state.loginUserReducer.accessToken);
@@ -45,6 +46,7 @@ function App() {
               }
             ></Route>
 
+            <Route path="/register" element={<RegisterComponent />}></Route>
             <Route path="/login" element={<LoginComponent />}></Route>
             <Route path="/profile" element={<ProfiloUser />}></Route>
           </Routes>

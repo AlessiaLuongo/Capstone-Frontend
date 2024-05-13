@@ -9,6 +9,27 @@ export const DELETE_SINGLE_LOCATION = "DELETE_SINGLE_LOCATION";
 export const CREATE_NEW_ACTIVITY = "CREATE_NEW_ACTIVITY";
 export const CREATE_NEW_LOCATION = "CREATE_NEW_LOCATION";
 export const GET_THE_BEST_POSTS = "GET_THE_BEST_POSTS";
+export const REGISTER = "REGISTER";
+
+//-------------------------------------REGISTER----------------------------------------------//
+
+export const registerUser = (newUser) => {
+  return async (dispatch) => {
+    const response = await fetch("http://localhost:3001/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      dispatch({ type: REGISTER, payload: data });
+    } else {
+      throw new Error("Problem with Access Token");
+    }
+  };
+};
 
 //-------------------------------------LOGIN-------------------------------------------------//
 
@@ -286,7 +307,7 @@ export const fetchTheBestPosts = () => {
     });
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
+
       dispatch({
         type: GET_THE_BEST_POSTS,
         payload: { data },

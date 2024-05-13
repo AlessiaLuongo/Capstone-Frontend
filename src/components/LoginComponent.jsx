@@ -15,7 +15,7 @@ const LoginComponent = () => {
       dispatch(getCurrentUser(token));
       navigate("/homepage");
     }
-  }, [token, navigate]);
+  }, [dispatch, token, navigate]);
 
   //----------------------------------------------------------------------------------------------//
 

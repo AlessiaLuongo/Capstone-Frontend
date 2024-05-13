@@ -8,8 +8,6 @@ const HomepageGuests = () => {
   const dispatch = useDispatch();
   const listOfTheBest = useSelector((state) => state.getTheBestPosts.content);
 
-  console.log(listOfTheBest);
-
   // const shuffleArray = () => {
   //   const shuffeldArray = listOfTheBest.sort(() => 0.5 - Math.random());
   //   return shuffeldArray;
