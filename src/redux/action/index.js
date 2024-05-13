@@ -24,7 +24,7 @@ export const registerUser = (newUser) => {
     });
     if (response.ok) {
       const data = await response.json();
-      dispatch({ type: REGISTER, payload: data });
+      dispatch({ type: REGISTER, payload: data.id });
     } else {
       throw new Error("Problem with Access Token");
     }
