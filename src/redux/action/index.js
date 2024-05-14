@@ -10,6 +10,7 @@ export const CREATE_NEW_ACTIVITY = "CREATE_NEW_ACTIVITY";
 export const CREATE_NEW_LOCATION = "CREATE_NEW_LOCATION";
 export const GET_THE_BEST_POSTS = "GET_THE_BEST_POSTS";
 export const REGISTER = "REGISTER";
+export const UPLOAD_IMAGE = "UPLOAD_IMAGE";
 
 //-------------------------------------REGISTER----------------------------------------------//
 
@@ -315,6 +316,37 @@ export const fetchTheBestPosts = () => {
       });
     } else {
       throw new Error("Seems there are some Server Problems");
+    }
+  };
+};
+
+//-------------------------------------UPLOAD IMAGE--------------------------------------------//
+
+export const fetchUploadImage = (accessToken, avatar) => {
+  let formData = new FormData();
+  formData.append("avatar", avatar);
+
+  return async (dispatch) => {
+    try {
+      const response = await fetch("http://localhost:3001/users/me/avatar", {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: formData,
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("data", data);
+        dispatch({
+          type: UPLOAD_IMAGE,
+          payload: data.avatar,
+        });
+      } else {
+        throw new Error("Problem with Access Token");
+      }
+    } catch {
+      throw new Error("Problem uploading the avatar");
     }
   };
 };
