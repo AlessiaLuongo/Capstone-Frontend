@@ -1,4 +1,4 @@
-import { LOGIN } from "../action";
+import { LOGIN, UPDATE_USER_INFOS } from "../action";
 import { CURRENT_USER } from "../action";
 
 const accessToken = {
@@ -15,7 +15,16 @@ const loginUserReducer = (state = accessToken, action) => {
       };
 
     case CURRENT_USER:
-      return { ...state, user: action.payload };
+      return {
+        ...state,
+        user: action.payload,
+      };
+
+    case UPDATE_USER_INFOS:
+      return {
+        ...state,
+        user: action.payload,
+      };
 
     default:
       return state;

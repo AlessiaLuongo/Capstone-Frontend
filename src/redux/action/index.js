@@ -11,6 +11,7 @@ export const CREATE_NEW_LOCATION = "CREATE_NEW_LOCATION";
 export const GET_THE_BEST_POSTS = "GET_THE_BEST_POSTS";
 export const REGISTER = "REGISTER";
 export const UPLOAD_IMAGE = "UPLOAD_IMAGE";
+export const UPDATE_USER_INFOS = "UPDATE_USER_INFOS";
 
 //-------------------------------------REGISTER----------------------------------------------//
 
@@ -54,6 +55,8 @@ export const LoginUser = (user) => {
   };
 };
 
+//-------------------------------------CURRENT USER--------------------------------------------//
+
 export const getCurrentUser = (accessToken) => {
   return async (dispatch) => {
     console.log("ok");
@@ -72,6 +75,31 @@ export const getCurrentUser = (accessToken) => {
       });
     } else {
       throw new Error("Problem with Access Token");
+    }
+  };
+};
+
+//-------------------------------------UPDATE USER--------------------------------------------//
+
+export const fetchUpdateUserInfos = (accessToken, updatedUser) => {
+  return async (dispatch) => {
+    const response = await fetch(`http://localhost:3001/users/me`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(updatedUser),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      console.log("passa  prima dispach");
+      dispatch({
+        type: UPDATE_USER_INFOS,
+        payload: data,
+      });
+    } else {
+      throw new Error("Seems there are some Server Problems");
     }
   };
 };

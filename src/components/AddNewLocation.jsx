@@ -18,9 +18,9 @@ const AddNewLocation = ({ showLocation, handleCloseLocation }) => {
 
   const dispatch = useDispatch();
   const token = useSelector((state) => state.loginUserReducer.accessToken);
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(fetchCreateNewLocation(newLocation, token));
+    await dispatch(fetchCreateNewLocation(newLocation, token));
     dispatch(fetchTheBestPosts());
     handleCloseLocation();
   };
