@@ -58,9 +58,9 @@ const SingleActivity = ({ activity }) => {
     <Col xs={12} md={6} lg={4}>
       {frontSide === true ? (
         <Card>
-          <Card.Img variant="top" src={""} />
+          <Card.Img variant="top" src={activity.picture} />
           <Card.Body>
-            {userLoggedIn ? (
+            {userLoggedIn && currentUser.id === activity.user.id ? (
               <CardText className="d-flex">
                 <i
                   className="bi bi-list me-3"
@@ -68,7 +68,7 @@ const SingleActivity = ({ activity }) => {
                 ></i>
 
                 {showButtons === true ? (
-                  <div>
+                  <span>
                     {currentUser.id === activity.user.id ? (
                       <i
                         className="bi bi-vector-pen me-2"
@@ -93,7 +93,7 @@ const SingleActivity = ({ activity }) => {
                     ) : (
                       ""
                     )}
-                  </div>
+                  </span>
                 ) : (
                   ""
                 )}

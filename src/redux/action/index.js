@@ -12,6 +12,7 @@ export const GET_THE_BEST_POSTS = "GET_THE_BEST_POSTS";
 export const REGISTER = "REGISTER";
 export const UPLOAD_IMAGE = "UPLOAD_IMAGE";
 export const UPDATE_USER_INFOS = "UPDATE_USER_INFOS";
+export const UPLOAD_ACTIVITY_PICTURE = "UPLOAD_ACTIVITY_PICTURE";
 
 //-------------------------------------REGISTER----------------------------------------------//
 
@@ -93,7 +94,7 @@ export const fetchUpdateUserInfos = (accessToken, updatedUser) => {
     });
     if (response.ok) {
       const data = await response.json();
-      console.log("passa  prima dispach");
+
       dispatch({
         type: UPDATE_USER_INFOS,
         payload: data,
@@ -348,7 +349,7 @@ export const fetchTheBestPosts = () => {
   };
 };
 
-//-------------------------------------UPLOAD IMAGE--------------------------------------------//
+//-------------------------------------UPLOAD PROFILE AVATAR--------------------------------------------//
 
 export const fetchUploadImage = (accessToken, avatar) => {
   let formData = new FormData();
@@ -375,6 +376,41 @@ export const fetchUploadImage = (accessToken, avatar) => {
       }
     } catch {
       throw new Error("Problem uploading the avatar");
+    }
+  };
+};
+
+//-------------------------------------UPLOAD POST PICTURE--------------------------------------------//
+
+export const uploadActivityPicture = (accessToken, picture, activityId) => {
+  let formData = new FormData();
+  formData.append("picture", picture);
+  console.log(formData);
+
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/activities/${activityId}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: formData,
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        console.log("data", data);
+        dispatch({
+          type: UPLOAD_ACTIVITY_PICTURE,
+          payload: data.picture,
+        });
+      } else {
+        throw new Error("Problem with Access Token");
+      }
+    } catch {
+      throw new Error("Problem uploading the picture");
     }
   };
 };

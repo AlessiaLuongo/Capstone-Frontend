@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCreateNewActivity, fetchTheBestPosts } from "../redux/action";
+import {
+  fetchCreateNewActivity,
+  fetchTheBestPosts,
+  uploadActivityPicture,
+} from "../redux/action";
 
 const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
   const formattedDateToSendBack = (date) => {
     return new Date(date).toISOString().slice(0, 10);
   };
+
+  const accessToken = useSelector(
+    (state) => state.loginUserReducer.accessToken
+  );
 
   const [newActivity, setNewActivity] = useState({
     title: "",
@@ -17,16 +25,28 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
     endDate: new Date(),
     eventType: "",
     rate: 0,
+    picture: null,
   });
+
+  const newActivityId = useSelector(
+    (state) => state.createNewActivity.content.id
+  );
 
   const token = useSelector((state) => state.loginUserReducer.accessToken);
   const dispatch = useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     await dispatch(fetchCreateNewActivity(newActivity, token));
+    await dispatch(uploadActivityPicture(accessToken, picture, newActivityId));
 
     dispatch(fetchTheBestPosts());
     handleCloseActivity();
+  };
+
+  const [picture, setPicture] = useState(null);
+  const handlePicture = (e) => {
+    setPicture(e.target.files[0]);
   };
 
   useEffect(() => {
@@ -47,6 +67,10 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formFile" className="mb-3">
+            <Form.Label>Aggiungi una foto</Form.Label>
+            <Form.Control type="file" onChange={handlePicture} />
+          </Form.Group>
           <Form.Group className="mb-3" controlId="text">
             <Form.Label>Titolo</Form.Label>
             <Form.Control
@@ -181,9 +205,11 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
             </Form.Select>
           </FormGroup>
 
-          <Button variant="primary" type="submit">
-            Salva
-          </Button>
+          <Modal.Footer>
+            <Button variant="primary" type="submit">
+              Salva
+            </Button>
+          </Modal.Footer>
         </Form>
       </Modal.Body>
     </Modal>

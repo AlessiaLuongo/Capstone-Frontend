@@ -14,6 +14,7 @@ import createNewLocationReducer from "../reducers/createNewLocation";
 import getTheBestPosts from "../reducers/getTheBestPosts";
 import registerUserReducer from "../reducers/registerUser";
 import uploadImageReducer from "../reducers/uploadImage";
+import uploadActivityPictureReducer from "../reducers/uploadActivityPicture";
 
 const rootReducer = combineReducers({
   getAllActivities: getAllActivities,
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   getTheBestPosts: getTheBestPosts,
   registerUser: registerUserReducer,
   uploadImage: uploadImageReducer,
+  uploadActivityPicture: uploadActivityPictureReducer,
 });
 
 const persistConfig = {

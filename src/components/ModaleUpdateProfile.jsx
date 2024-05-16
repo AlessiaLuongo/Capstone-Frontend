@@ -23,7 +23,7 @@ const ModaleUpdateProfile = ({ handleClose, show, onSave }) => {
 
   const handleSaveInfos = async (e) => {
     e.preventDefault();
-    console.log("fa la funzione");
+
     if (avatar) {
       await dispatch(fetchUploadImage(accessToken, avatar));
     }

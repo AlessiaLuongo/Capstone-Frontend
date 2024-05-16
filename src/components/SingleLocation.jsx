@@ -58,14 +58,14 @@ const SingleLocation = ({ location }) => {
         <Card>
           <Card.Img variant="top" src={""} />
           <Card.Body>
-            {userLoggedIn && (
+            {userLoggedIn && currentUser.id === location.user.id && (
               <CardText className="d-flex">
                 <i
                   className="bi bi-list me-3"
                   onClick={() => setShowButtons(!showButtons)}
                 ></i>
                 {showButtons && (
-                  <div>
+                  <span>
                     {currentUser.id === location.user.id && (
                       <>
                         <i
@@ -86,7 +86,7 @@ const SingleLocation = ({ location }) => {
                         ></i>
                       </>
                     )}
-                  </div>
+                  </span>
                 )}
               </CardText>
             )}
