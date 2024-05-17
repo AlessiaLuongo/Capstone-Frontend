@@ -10,7 +10,14 @@ $new-theme-colors: (
   //   "info": ,
   //   "light": ,
   "dark": #0d1821,
+  "background": #c4e4dd45,
 );
+
+html,
+main,
+.modal-header {
+  background-color: map-get($map: $new-theme-colors, $key: "background");
+}
 
 $theme-colors: map-merge($theme-colors, $new-theme-colors);
 

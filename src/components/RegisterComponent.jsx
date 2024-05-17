@@ -23,7 +23,7 @@ const RegisterComponent = () => {
   };
 
   return (
-    <Container className="m-5">
+    <Container className="p-5">
       <Row className="justify-content-center align-content-center">
         <Col xs={12} md={6} lg={4}>
           <h2 className="mb-5 text-center">Welcome to HelloWorld!</h2>

@@ -77,7 +77,7 @@ const AddNewLocation = ({ showLocation, handleCloseLocation }) => {
       keyboard={false}
       size="lg"
     >
-      <Modal.Header closeButton>
+      <Modal.Header closeButton className="modal-header">
         <Modal.Title>Condividi un nuovo luogo!</Modal.Title>
       </Modal.Header>
       <Modal.Body>

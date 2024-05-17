@@ -13,7 +13,7 @@ const ProfiloUser = () => {
 
   return (
     <Container>
-      <Row className="my-5 g-3 align-items-center">
+      <Row className="py-5 g-3 align-items-center">
         <Col xs={12} md={5} lg={4}>
           <Image
             src={currentUser.avatar}
@@ -23,8 +23,8 @@ const ProfiloUser = () => {
           />
         </Col>
         <Col xs={12} md={7} lg={8}>
-          <Card border="secondary">
-            <Card.Header className="d-flex justify-content-between align-items-center">
+          <Card border="dark">
+            <Card.Header className="d-flex justify-content-between align-items-center login-card-header">
               <div> {currentUser.username}</div>
 
               <i className="bi bi-vector-pen me-2" onClick={handleShow}></i>

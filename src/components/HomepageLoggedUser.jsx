@@ -25,7 +25,7 @@ const HomepageLoggedUser = () => {
   //----------------------------------------------------------------------------------------------//
   return (
     <Container>
-      <Row className="justify-content-center m-4">
+      <Row className="justify-content-center p-4">
         <Col xs={12} md={7} lg={5} className="text-center">
           <Button
             variant="primary"

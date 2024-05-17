@@ -80,7 +80,7 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
       keyboard={false}
       size="lg"
     >
-      <Modal.Header closeButton>
+      <Modal.Header closeButton className="modal-header">
         <Modal.Title>Condividi una nuova attività!</Modal.Title>
       </Modal.Header>
       <Modal.Body>
