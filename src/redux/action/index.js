@@ -14,6 +14,7 @@ export const UPLOAD_IMAGE = "UPLOAD_IMAGE";
 export const UPDATE_USER_INFOS = "UPDATE_USER_INFOS";
 export const UPLOAD_ACTIVITY_PICTURE = "UPLOAD_ACTIVITY_PICTURE";
 export const UPLOAD_LOCATION_PICTURE = "UPLOAD_LOCATION_PICTURE";
+export const LOGOUT_USER = "LOGOUT_USER";
 
 //-------------------------------------REGISTER----------------------------------------------//
 
@@ -57,6 +58,13 @@ export const LoginUser = (user) => {
   };
 };
 
+//-------------------------------------LOGOUT--------------------------------------------//
+
+export const logoutUser = () => {
+  return {
+    type: LOGOUT_USER,
+  };
+};
 //-------------------------------------CURRENT USER--------------------------------------------//
 
 export const getCurrentUser = (accessToken) => {

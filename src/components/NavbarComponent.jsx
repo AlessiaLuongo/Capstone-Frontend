@@ -1,10 +1,20 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../redux/action";
+import { useNavigate } from "react-router-dom";
 
 const NavbarComponent = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const token = useSelector((state) => {
     return state.loginUserReducer.accessToken;
   });
+
+  const logout = () => {
+    dispatch(logoutUser());
+    navigate("/homepage");
+  };
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -29,7 +39,10 @@ const NavbarComponent = () => {
           </Nav>
           <Nav>
             {token ? (
-              <Nav.Link href="/profile">Profilo</Nav.Link>
+              <>
+                <Nav.Link href="/profile">Profilo</Nav.Link>
+                <Nav.Link onClick={logout}>Logout</Nav.Link>
+              </>
             ) : (
               <>
                 <Nav.Link href="/login">Login</Nav.Link>

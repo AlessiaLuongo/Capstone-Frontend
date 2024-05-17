@@ -1,4 +1,4 @@
-import { LOGIN, UPDATE_USER_INFOS } from "../action";
+import { LOGIN, UPDATE_USER_INFOS, LOGOUT_USER } from "../action";
 import { CURRENT_USER } from "../action";
 
 const accessToken = {
@@ -24,6 +24,12 @@ const loginUserReducer = (state = accessToken, action) => {
       return {
         ...state,
         user: action.payload,
+      };
+
+    case LOGOUT_USER:
+      return {
+        ...state,
+        accessToken: "",
       };
 
     default:
