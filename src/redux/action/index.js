@@ -13,6 +13,7 @@ export const REGISTER = "REGISTER";
 export const UPLOAD_IMAGE = "UPLOAD_IMAGE";
 export const UPDATE_USER_INFOS = "UPDATE_USER_INFOS";
 export const UPLOAD_ACTIVITY_PICTURE = "UPLOAD_ACTIVITY_PICTURE";
+export const UPLOAD_LOCATION_PICTURE = "UPLOAD_LOCATION_PICTURE";
 
 //-------------------------------------REGISTER----------------------------------------------//
 
@@ -133,8 +134,6 @@ export const fetchAllActivities = (page = 0, size = 10) => {
 //------------------------------------CREATE NEW ACTIVITY--------------------------------------------//
 
 export const fetchCreateNewActivity = (body, accessToken) => {
-  console.log(accessToken);
-  console.log(body);
   return async (dispatch) => {
     const response = await fetch("http://localhost:3001/activities/me", {
       method: "POST",
@@ -146,7 +145,8 @@ export const fetchCreateNewActivity = (body, accessToken) => {
     });
     if (response.ok) {
       const data = await response.json();
-      dispatch({
+
+      return dispatch({
         type: CREATE_NEW_ACTIVITY,
         payload: data,
       });
@@ -259,7 +259,7 @@ export const fetchCreateNewLocation = (body, accessToken) => {
     });
     if (response.ok) {
       const data = await response.json();
-      dispatch({
+      return dispatch({
         type: CREATE_NEW_LOCATION,
         payload: data,
       });
@@ -380,12 +380,11 @@ export const fetchUploadImage = (accessToken, avatar) => {
   };
 };
 
-//-------------------------------------UPLOAD POST PICTURE--------------------------------------------//
+//-------------------------------------UPLOAD ACTIVITY PICTURE--------------------------------------------//
 
 export const uploadActivityPicture = (accessToken, picture, activityId) => {
   let formData = new FormData();
   formData.append("picture", picture);
-  console.log(formData);
 
   return async (dispatch) => {
     try {
@@ -404,6 +403,40 @@ export const uploadActivityPicture = (accessToken, picture, activityId) => {
         console.log("data", data);
         dispatch({
           type: UPLOAD_ACTIVITY_PICTURE,
+          payload: data.picture,
+        });
+      } else {
+        throw new Error("Problem with Access Token");
+      }
+    } catch {
+      throw new Error("Problem uploading the picture");
+    }
+  };
+};
+
+//-------------------------------------UPLOAD LOCATION PICTURE--------------------------------------------//
+
+export const uploadLocationPicture = (accessToken, picture, locationId) => {
+  let formData = new FormData();
+  formData.append("picture", picture);
+
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/locations/${locationId}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: formData,
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        console.log("data", data);
+        dispatch({
+          type: UPLOAD_LOCATION_PICTURE,
           payload: data.picture,
         });
       } else {

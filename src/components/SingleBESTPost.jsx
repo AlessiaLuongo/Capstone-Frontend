@@ -26,7 +26,7 @@ const SingleBESTPost = ({ bestPost }) => {
   return (
     <Col xs={12} md={6} lg={2}>
       <Card>
-        <Card.Img variant="top" src={""} />
+        <Card.Img variant="top" src={bestPost.picture} />
         <Card.Body>
           <Card.Subtitle className="mb-2 text-muted text-end">
             {dateFormatter(bestPost.creationDate)}

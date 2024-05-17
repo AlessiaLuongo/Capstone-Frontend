@@ -1,9 +1,31 @@
 import { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCreateNewLocation, fetchTheBestPosts } from "../redux/action";
+import {
+  fetchCreateNewLocation,
+  fetchTheBestPosts,
+  uploadLocationPicture,
+} from "../redux/action";
 
 const AddNewLocation = ({ showLocation, handleCloseLocation }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchTheBestPosts());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const accessToken = useSelector(
+    (state) => state.loginUserReducer.accessToken
+  );
+
+  const newLocationId = useSelector((state) => state.createNewLocation.id);
+
+  useEffect(() => {
+    console.log("Id aggiornato", newLocationId);
+  }, [newLocationId]);
+
+  const [picture, setPicture] = useState(null);
+
   const [newLocation, setNewLocation] = useState({
     title: "",
     description: "",
@@ -14,20 +36,36 @@ const AddNewLocation = ({ showLocation, handleCloseLocation }) => {
     rate: 0,
     locationType: "",
     influxOfPeople: "",
+    picture: null,
   });
 
-  const dispatch = useDispatch();
-  const token = useSelector((state) => state.loginUserReducer.accessToken);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(fetchCreateNewLocation(newLocation, token));
-    dispatch(fetchTheBestPosts());
-    handleCloseLocation();
+
+    try {
+      const result = await dispatch(
+        fetchCreateNewLocation(newLocation, accessToken)
+      );
+
+      const newLocationId = result.payload.id;
+      console.log("questo è l'id", newLocationId);
+      if (newLocationId) {
+        await dispatch(
+          uploadLocationPicture(accessToken, picture, newLocationId)
+        );
+      }
+
+      await dispatch(fetchTheBestPosts());
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      handleCloseLocation();
+    }
   };
 
-  useEffect(() => {
-    dispatch(fetchTheBestPosts());
-  }, []);
+  const handlePicture = (e) => {
+    setPicture(e.target.files[0]);
+  };
 
   //----------------------------------------------------------------------------------------------//
 
@@ -44,6 +82,10 @@ const AddNewLocation = ({ showLocation, handleCloseLocation }) => {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formFile" className="mb-3">
+            <Form.Label>Aggiungi una foto</Form.Label>
+            <Form.Control type="file" onChange={handlePicture} />
+          </Form.Group>
           <Form.Group className="mb-3" controlId="text">
             <Form.Label>Titolo</Form.Label>
             <Form.Control

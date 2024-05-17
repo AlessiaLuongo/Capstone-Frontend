@@ -1,7 +1,7 @@
 import { UPLOAD_ACTIVITY_PICTURE } from "../action";
 
 const initialState = {
-  avatar: null,
+  picture: null,
 };
 
 const uploadActivityPictureReducer = (state = initialState, action) => {

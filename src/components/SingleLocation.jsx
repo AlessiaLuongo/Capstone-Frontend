@@ -56,7 +56,7 @@ const SingleLocation = ({ location }) => {
     <Col xs={12} md={6} lg={4}>
       {frontSide ? (
         <Card>
-          <Card.Img variant="top" src={""} />
+          <Card.Img variant="top" src={location.picture} />
           <Card.Body>
             {userLoggedIn && currentUser.id === location.user.id && (
               <CardText className="d-flex">

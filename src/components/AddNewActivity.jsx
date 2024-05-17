@@ -8,13 +8,23 @@ import {
 } from "../redux/action";
 
 const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
-  const formattedDateToSendBack = (date) => {
-    return new Date(date).toISOString().slice(0, 10);
-  };
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchTheBestPosts());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const accessToken = useSelector(
     (state) => state.loginUserReducer.accessToken
   );
+
+  const newActivityId = useSelector((state) => state.createNewActivity.id);
+
+  useEffect(() => {
+    console.log("Id aggiornato", newActivityId);
+  }, [newActivityId]);
+
+  const [picture, setPicture] = useState(null);
 
   const [newActivity, setNewActivity] = useState({
     title: "",
@@ -28,30 +38,38 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
     picture: null,
   });
 
-  const newActivityId = useSelector(
-    (state) => state.createNewActivity.content.id
-  );
+  const formattedDateToSendBack = (date) => {
+    return new Date(date).toISOString().slice(0, 10);
+  };
 
-  const token = useSelector((state) => state.loginUserReducer.accessToken);
-  const dispatch = useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await dispatch(fetchCreateNewActivity(newActivity, token));
-    await dispatch(uploadActivityPicture(accessToken, picture, newActivityId));
+    try {
+      const result = await dispatch(
+        fetchCreateNewActivity(newActivity, accessToken)
+      );
 
-    dispatch(fetchTheBestPosts());
-    handleCloseActivity();
+      const newActivityId = result.payload.id;
+      console.log("questo è l'id", newActivityId);
+      if (newActivityId) {
+        await dispatch(
+          uploadActivityPicture(accessToken, picture, newActivityId)
+        );
+      }
+
+      await dispatch(fetchTheBestPosts());
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      handleCloseActivity();
+    }
   };
 
-  const [picture, setPicture] = useState(null);
   const handlePicture = (e) => {
     setPicture(e.target.files[0]);
   };
 
-  useEffect(() => {
-    dispatch(fetchTheBestPosts());
-  }, []);
   //----------------------------------------------------------------------------------------------//
 
   return (
