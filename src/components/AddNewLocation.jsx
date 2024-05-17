@@ -221,9 +221,11 @@ const AddNewLocation = ({ showLocation, handleCloseLocation }) => {
             </Form.Select>
           </FormGroup>
 
-          <Button variant="primary" type="submit">
-            Salva
-          </Button>
+          <Modal.Footer>
+            <Button variant="primary" type="submit">
+              Salva
+            </Button>
+          </Modal.Footer>
         </Form>
       </Modal.Body>
     </Modal>

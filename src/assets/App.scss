@@ -1,0 +1,17 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+$new-theme-colors: (
+  "primary": #a3cbc2,
+  "secondary": #f8c84d,
+  //   "success": ,
+  "danger": #da2c38,
+  //   "warning": ,
+  //   "info": ,
+  //   "light": ,
+  "dark": #0d1821,
+);
+
+$theme-colors: map-merge($theme-colors, $new-theme-colors);
+
+@import "~bootstrap/scss/bootstrap";

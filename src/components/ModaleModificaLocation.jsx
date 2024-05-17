@@ -150,9 +150,11 @@ const ModaleModificaLocation = ({ show, handleClose, location, token }) => {
               <option value="2">Alta</option>
             </Form.Select>
           </FormGroup>
-          <Button variant="primary" type="submit">
-            Salva
-          </Button>
+          <Modal.Footer>
+            <Button variant="primary" type="submit">
+              Salva
+            </Button>
+          </Modal.Footer>
         </Form>
       </Modal.Body>
     </Modal>

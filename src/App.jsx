@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.min.css";
-import "./App.css";
+import "./assets/App.css";
 import NavbarComponent from "./components/NavbarComponent";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AllActivities from "./components/AllActivities";

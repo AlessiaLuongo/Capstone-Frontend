@@ -1,4 +1,4 @@
-import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
+import { Card, Col, Container, Image, Row } from "react-bootstrap";
 
 import { useState } from "react";
 import ModaleUpdateProfile from "./ModaleUpdateProfile";
@@ -26,9 +26,9 @@ const ProfiloUser = () => {
           <Card border="secondary">
             <Card.Header className="d-flex justify-content-between align-items-center">
               <div> {currentUser.username}</div>
-              <Button variant="primary" onClick={handleShow}>
-                Modifica il tuo profilo
-              </Button>
+
+              <i className="bi bi-vector-pen me-2" onClick={handleShow}></i>
+
               <ModaleUpdateProfile
                 show={show}
                 handleClose={() => {

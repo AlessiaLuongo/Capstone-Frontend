@@ -24,6 +24,8 @@ const NavbarComponent = () => {
             src="logoHelloWorld.png"
             alt="hello-world-logo"
             id="navbar-logo"
+            width={"80vh"}
+            height={"60vh"}
           />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />

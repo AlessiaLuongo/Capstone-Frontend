@@ -28,16 +28,13 @@ const HomepageLoggedUser = () => {
       <Row className="justify-content-center m-4">
         <Col xs={12} md={7} lg={5} className="text-center">
           <Button
-            variant="outline-secondary"
+            variant="primary"
             className="me-3"
             onClick={handleShowAddNewActivity}
           >
             <i className="bi bi-plus-circle"></i> Attività
           </Button>
-          <Button
-            variant="outline-secondary"
-            onClick={handleShowAddNewLocation}
-          >
+          <Button variant="primary" onClick={handleShowAddNewLocation}>
             <i className="bi bi-plus-circle"></i> Luogo
           </Button>
         </Col>

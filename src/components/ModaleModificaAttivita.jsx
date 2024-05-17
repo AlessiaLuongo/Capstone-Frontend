@@ -171,9 +171,11 @@ const ModaleModificaAttivita = ({ show, handleClose, activity, token }) => {
               <option value="6">Altro</option>
             </Form.Select>
           </FormGroup>
-          <Button variant="primary" type="submit">
-            Salva
-          </Button>
+          <Modal.Footer>
+            <Button variant="primary" type="submit">
+              Salva
+            </Button>
+          </Modal.Footer>
         </Form>
       </Modal.Body>
     </Modal>

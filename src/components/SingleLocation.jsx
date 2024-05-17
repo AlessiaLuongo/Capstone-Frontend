@@ -126,7 +126,7 @@ const SingleLocation = ({ location }) => {
             </Card.Subtitle>
             <Card.Text>{location.description}</Card.Text>
             <Card.Text>{location.outdoor}</Card.Text>
-            <Card.Text>{location.price}</Card.Text>
+            <Card.Text>{location.price} €</Card.Text>
             <Card.Text>{location.locationType}</Card.Text>
             <Card.Text>{location.influxOfPeople}</Card.Text>
 
