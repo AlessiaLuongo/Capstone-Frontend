@@ -27,7 +27,9 @@ const HomepageGuests = () => {
             return <SingleBESTPost key={bestPost.id} bestPost={bestPost} />;
           })
         ) : (
-          <Alert variant="info">No Locations found</Alert>
+          <Alert variant="info" className="text-center my-5">
+            No Locations found
+          </Alert>
         )}
       </Row>
     </Container>

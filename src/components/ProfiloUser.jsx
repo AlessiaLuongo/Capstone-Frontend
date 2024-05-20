@@ -11,7 +11,10 @@ const ProfiloUser = () => {
 
   const currentUser = useSelector((state) => state.loginUserReducer.user);
 
-  console.log(currentUser.listOfFavouriteActivities);
+  const favouriteActivities = useSelector(
+    (state) => state.favouriteActivitiesReducer
+  );
+  console.log(favouriteActivities);
 
   return (
     <Container>
@@ -45,12 +48,8 @@ const ProfiloUser = () => {
         </Col>
       </Row>
       <Row className="flex-column">
-        <Col>
-          Le mie attività preferite {currentUser.listOfFavouriteLocations}
-        </Col>
-        <Col>
-          I miei luoghi preferiti {currentUser.listOfFavouriteActivities}
-        </Col>
+        <Col>Le mie attività preferite {favouriteActivities}</Col>
+        <Col>I miei luoghi preferiti </Col>
       </Row>
     </Container>
   );

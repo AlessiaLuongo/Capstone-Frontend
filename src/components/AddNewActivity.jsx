@@ -31,16 +31,18 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
     description: "",
     outdoor: true,
     price: "",
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: null,
+    endDate: null,
     eventType: "",
     rate: 0,
     picture: null,
   });
 
   const formattedDateToSendBack = (date) => {
-    return new Date(date).toISOString().slice(0, 10);
+    return date ? new Date(date).toISOString().slice(0, 10) : "";
   };
+
+  const [showDates, setShowDates] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -101,7 +103,6 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
             />
             <Form.Text className="text-muted"></Form.Text>
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Label>Descrizione</Form.Label>
             <Form.Control
@@ -113,20 +114,6 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
               }}
             />
           </Form.Group>
-
-          <Form.Group className="mb-3" controlId="number">
-            <Form.Label>Prezzo</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Prezzo"
-              value={newActivity.price}
-              onChange={(e) => {
-                setNewActivity({ ...newActivity, price: e.target.value });
-              }}
-            />
-            <Form.Text className="text-muted"></Form.Text>
-          </Form.Group>
-
           <Form.Group>
             {["radio"].map((type) => (
               <div key={`inline-${type}`} className="mb-3">
@@ -161,30 +148,6 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
               </div>
             ))}
           </Form.Group>
-
-          <FormGroup>
-            <Form.Label>Data di inizio</Form.Label>
-            <Form.Control
-              type="date"
-              name="datepic"
-              placeholder="DateRange"
-              value={formattedDateToSendBack(newActivity.startDate)}
-              onChange={(e) => {
-                setNewActivity({ ...newActivity, startDate: e.target.value });
-              }}
-            />
-
-            <Form.Label>Data di fine</Form.Label>
-            <Form.Control
-              type="date"
-              name="datepic"
-              placeholder="DateRange"
-              value={formattedDateToSendBack(newActivity.endDate)}
-              onChange={(e) => {
-                setNewActivity({ ...newActivity, endDate: e.target.value });
-              }}
-            />
-          </FormGroup>
           <FormGroup>
             <Form.Label>Scegli il tipo di attività</Form.Label>
             <Form.Select
@@ -204,7 +167,6 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
               <option value="6">Altro</option>
             </Form.Select>
           </FormGroup>
-
           <FormGroup>
             <Form.Label>Quanto ti è piaciuto da 1 a 5?</Form.Label>
             <Form.Select
@@ -222,6 +184,56 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
               <option value="5">5</option>
             </Form.Select>
           </FormGroup>
+          <hr />
+          <Button onClick={() => setShowDates(!showDates)}>
+            Aggiungi eventuali date e prezzi
+          </Button>
+          <hr />
+
+          {showDates === true ? (
+            <>
+              <Form.Group className="mb-3" controlId="number">
+                <Form.Label>Prezzo</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Prezzo"
+                  value={newActivity.price}
+                  onChange={(e) => {
+                    setNewActivity({ ...newActivity, price: e.target.value });
+                  }}
+                />
+                <Form.Text className="text-muted"></Form.Text>
+              </Form.Group>
+              <FormGroup>
+                <Form.Label>Data di inizio</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="datepic"
+                  placeholder="DateRange"
+                  value={formattedDateToSendBack(newActivity.startDate)}
+                  onChange={(e) => {
+                    setNewActivity({
+                      ...newActivity,
+                      startDate: e.target.value,
+                    });
+                  }}
+                />
+
+                <Form.Label>Data di fine</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="datepic"
+                  placeholder="DateRange"
+                  value={formattedDateToSendBack(newActivity.endDate)}
+                  onChange={(e) => {
+                    setNewActivity({ ...newActivity, endDate: e.target.value });
+                  }}
+                />
+              </FormGroup>
+            </>
+          ) : (
+            ""
+          )}
 
           <Modal.Footer>
             <Button variant="primary" type="submit">
