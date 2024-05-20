@@ -13,7 +13,7 @@ const LoginComponent = () => {
   useEffect(() => {
     if (token) {
       dispatch(getCurrentUser(token));
-      navigate("/homepage");
+      navigate("/");
     }
   }, [dispatch, token, navigate]);
 

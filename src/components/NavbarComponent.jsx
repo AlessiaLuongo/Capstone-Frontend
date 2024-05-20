@@ -13,13 +13,13 @@ const NavbarComponent = () => {
 
   const logout = () => {
     dispatch(logoutUser());
-    navigate("/homepage");
+    navigate("/");
   };
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href="/homepage">
+        <Navbar.Brand href="/">
           <img
             src="logoHelloWorld.png"
             alt="hello-world-logo"
@@ -35,7 +35,7 @@ const NavbarComponent = () => {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link href="/homepage">Home</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/activities">Attività</Nav.Link>
             <Nav.Link href="/locations">Luoghi</Nav.Link>
           </Nav>

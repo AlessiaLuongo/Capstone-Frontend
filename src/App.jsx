@@ -24,7 +24,7 @@ function App() {
         <main>
           <Routes>
             <Route
-              path="/homepage"
+              path="/"
               element={
                 <>{loggedUser ? <HomepageLoggedUser /> : <HomepageGuests />}</>
               }
