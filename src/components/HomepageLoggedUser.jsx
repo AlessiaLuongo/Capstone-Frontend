@@ -24,9 +24,9 @@ const HomepageLoggedUser = () => {
   }, [dispatch]);
   //----------------------------------------------------------------------------------------------//
   return (
-    <Container>
-      <Row className="justify-content-center p-4">
-        <Col xs={12} md={7} lg={5} className="text-center">
+    <Container fluid>
+      <Row className="justify-content-center py-5">
+        <Col xs={12} md={6} lg={4} className="text-center">
           <Button
             variant="primary"
             className="me-3"
@@ -51,7 +51,7 @@ const HomepageLoggedUser = () => {
           />
         )}
       </Row>
-      <Row>
+      <Row className="gy-4 mx-5 ">
         {listOfTheBest && listOfTheBest.length > 0 ? (
           listOfTheBest.map((bestPost) => {
             return <SingleBESTPost key={bestPost.id} bestPost={bestPost} />;

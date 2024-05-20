@@ -59,7 +59,7 @@ const SingleActivity = ({ activity }) => {
       {frontSide === true ? (
         <Card>
           <Card.Img variant="top" src={activity.picture} />
-          <Card.Body>
+          <Card.Body className="d-flex flex-column justify-content-between">
             {userLoggedIn && currentUser.id === activity.user.id ? (
               <CardText className="d-flex">
                 <i
@@ -110,21 +110,21 @@ const SingleActivity = ({ activity }) => {
               {rateStar(activity.rate)}
             </Card.Subtitle>
             <Card.Text>{activity.description}</Card.Text>
+
             <div className="d-flex align-items-end justify-content-between">
-              <div>
-                <Button
-                  variant="outline-dark"
-                  onClick={() => setFrontSide(false)}
-                >
-                  Più dettagli
-                </Button>
-              </div>
+              <Button
+                variant="outline-dark"
+                onClick={() => setFrontSide(false)}
+              >
+                Più dettagli
+              </Button>
+              <i className="bi bi-suit-heart"></i>
             </div>
           </Card.Body>
         </Card>
       ) : (
         <Card>
-          <Card.Img variant="top" src={""} />
+          <Card.Img variant="top" src={activity.picture} />
           <Card.Body>
             <Card.Subtitle className="mb-2 text-muted text-end">
               {dateFormatter(activity.creationDate)}

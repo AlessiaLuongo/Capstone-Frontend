@@ -36,19 +36,21 @@ const AllLocations = () => {
   //----------------------------------------------------------------------------------------------//
 
   return (
-    <Container>
+    <Container fluid>
       <SearchBar
         onSearch={handleSearch}
         inputValue={inputValue}
         setInputValue={setInputValue}
       />
-      <Row className="justify-content-center align-content-center g-4 mt-3">
+      <Row className="justify-content-center align-content-center gy-4 pt-3 mx-5">
         {filteredLocations && filteredLocations.length > 0 ? (
           filteredLocations.map((location) => {
             return <SingleLocation key={location.id} location={location} />;
           })
         ) : (
-          <Alert variant="info">No Locations found</Alert>
+          <Alert variant="info" className="text-center">
+            No Locations found
+          </Alert>
         )}
       </Row>
     </Container>

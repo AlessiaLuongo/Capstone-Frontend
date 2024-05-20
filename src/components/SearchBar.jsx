@@ -11,7 +11,7 @@ const SearchBar = ({ onSearch, inputValue, setInputValue }) => {
   };
 
   return (
-    <Row className="justify-content-center align-content-center p-4">
+    <Row className="justify-content-center align-content-center py-4">
       <Col xs={12} md={8} lg={6}>
         <Form className="d-flex" onSubmit={handleSubmit}>
           <Form.Control

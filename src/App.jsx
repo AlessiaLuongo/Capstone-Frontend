@@ -11,6 +11,7 @@ import HomepageLoggedUser from "./components/HomepageLoggedUser";
 import { useSelector } from "react-redux";
 import HomepageGuests from "./components/HomepageGuests";
 import RegisterComponent from "./components/RegisterComponent";
+import Footer from "./components/Footer";
 
 function App() {
   const loggedUser = useSelector((state) => state.loginUserReducer.accessToken);
@@ -51,7 +52,9 @@ function App() {
             <Route path="/profile" element={<ProfiloUser />}></Route>
           </Routes>
         </main>
-        <footer></footer>
+        <footer>
+          <Footer />
+        </footer>
       </div>
     </BrowserRouter>
   );

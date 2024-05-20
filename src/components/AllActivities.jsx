@@ -35,19 +35,21 @@ const AllActivities = () => {
   }, [inputValue, listaActivities]);
 
   return (
-    <Container>
+    <Container fluid>
       <SearchBar
         onSearch={handleSearch}
         inputValue={inputValue}
         setInputValue={setInputValue}
       />
-      <Row className="justify-content-center align-content-center g-4 mt-3">
+      <Row className="justify-content-center align-content-center gy-4 pt-3 mx-5">
         {filteredActivities && filteredActivities.length > 0 ? (
           filteredActivities.map((activity) => (
             <SingleActivity key={activity.id} activity={activity} />
           ))
         ) : (
-          <Alert variant="info">No Activities found</Alert>
+          <Alert variant="info" className="text-center">
+            No Activities found
+          </Alert>
         )}
       </Row>
     </Container>

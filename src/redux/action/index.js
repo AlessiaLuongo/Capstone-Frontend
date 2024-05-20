@@ -338,7 +338,7 @@ export const deleteSingleLocation = (locationId, accessToken) => {
 
 export const fetchTheBestPosts = () => {
   return async (dispatch) => {
-    const response = await fetch("http://localhost:3001/homepage", {
+    const response = await fetch("http://localhost:3001", {
       method: "GET",
       headers: {
         "Content-type": "application/json",

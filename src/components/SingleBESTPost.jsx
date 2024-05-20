@@ -24,7 +24,7 @@ const SingleBESTPost = ({ bestPost }) => {
   };
 
   return (
-    <Col xs={12} md={6} lg={2}>
+    <Col xs={12} md={6} lg={4}>
       <Card>
         <Card.Img variant="top" src={bestPost.picture} />
         <Card.Body>

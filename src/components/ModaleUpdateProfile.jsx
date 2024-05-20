@@ -34,7 +34,7 @@ const ModaleUpdateProfile = ({ handleClose, show, onSave }) => {
   return (
     <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal title</Modal.Title>
+        <Modal.Title>Aggiorna i tuoi dati</Modal.Title>
       </Modal.Header>
 
       <Form onSubmit={handleSaveInfos}>

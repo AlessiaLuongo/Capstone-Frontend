@@ -20,8 +20,8 @@ const HomepageGuests = () => {
   }, [dispatch]);
   //----------------------------------------------------------------------------------------------//
   return (
-    <Container>
-      <Row className="m-4">
+    <Container fluid>
+      <Row className="justify-content-center align-content-center gy-4 pt-3 mx-5">
         {listOfTheBest && listOfTheBest.length > 0 ? (
           listOfTheBest.map((bestPost) => {
             return <SingleBESTPost key={bestPost.id} bestPost={bestPost} />;

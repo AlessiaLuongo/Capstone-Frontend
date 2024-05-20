@@ -57,7 +57,7 @@ const SingleLocation = ({ location }) => {
       {frontSide ? (
         <Card>
           <Card.Img variant="top" src={location.picture} />
-          <Card.Body>
+          <Card.Body className="d-flex flex-column justify-content-between">
             {userLoggedIn && currentUser.id === location.user.id && (
               <CardText className="d-flex">
                 <i
@@ -114,7 +114,7 @@ const SingleLocation = ({ location }) => {
         </Card>
       ) : (
         <Card>
-          <Card.Img variant="top" src={""} />
+          <Card.Img variant="top" src={location.picture} />
           <Card.Body>
             <Card.Subtitle className="mb-2 text-muted text-end">
               {dateFormatter(location.creationDate)}
@@ -139,24 +139,6 @@ const SingleLocation = ({ location }) => {
                   Torna indietro
                 </Button>
               </div>
-
-              {userLoggedIn && currentUser.id === location.user.id && (
-                <>
-                  <i className="bi bi-vector-pen me-2" onClick={handleShow}></i>
-                  <ModaleModificaLocation
-                    location={location}
-                    handleClose={handleClose}
-                    show={show}
-                    token={userLoggedIn}
-                  />
-                  <i
-                    className="bi bi-trash3"
-                    onClick={() => {
-                      handleDelete();
-                    }}
-                  ></i>
-                </>
-              )}
             </div>
           </Card.Body>
         </Card>
