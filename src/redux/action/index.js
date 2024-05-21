@@ -17,6 +17,7 @@ export const UPLOAD_LOCATION_PICTURE = "UPLOAD_LOCATION_PICTURE";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const GET_FAVOURITE_ACTIVITIES = "GET_FAVOURITE_ACTIVITIES";
 export const ADD_FAVOURITE_ACTIVITIES = "ADD_FAVOURITE_ACTIVITIES";
+export const DELETE_FAVOURITE_ACTIVITY = "DELETE_FAVOURITE_ACTIVITY";
 
 //-------------------------------------REGISTER----------------------------------------------//
 
@@ -232,7 +233,7 @@ export const deleteSingleActivity = (activityId, accessToken) => {
 export const fetchFavouriteActivities = (accessToken) => {
   return async (dispatch) => {
     const response = await fetch(
-      "http://localhost:3001/users/me/favouriteActivities",
+      "http://localhost:3001/users/me/favourite-activities",
       {
         method: "GET",
         headers: {
@@ -243,7 +244,7 @@ export const fetchFavouriteActivities = (accessToken) => {
     );
     if (response.ok) {
       const data = await response.json();
-
+      console.log("fav", data);
       dispatch({
         type: GET_FAVOURITE_ACTIVITIES,
         payload: data,
@@ -256,17 +257,16 @@ export const fetchFavouriteActivities = (accessToken) => {
 
 //-------------------------------------ADD FAVOURITE ACTIVITIY----------------------------------------//
 
-export const fetchAddFavouriteActivities = (accessToken, activity) => {
+export const fetchAddFavouriteActivities = (accessToken, activityId) => {
   return async (dispatch) => {
     const response = await fetch(
-      "http://localhost:3001/users/me/favouriteActivities",
+      `http://localhost:3001/users/me/favourite-activities/${activityId}`,
       {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-type": "application/json",
         },
-        body: JSON.stringify(activity),
       }
     );
     if (response.ok) {
@@ -278,6 +278,35 @@ export const fetchAddFavouriteActivities = (accessToken, activity) => {
       });
     } else {
       throw new Error("Seems there are some Server Problems");
+    }
+  };
+};
+
+//-------------------------------------DELETE FAVOURITE ACTIVITY--------------------------------------------//
+
+export const fetchDeleteFavouriteActivity = (accessToken, activityId) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/activities/users/me/favourite-activities/${activityId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        dispatch({
+          type: DELETE_FAVOURITE_ACTIVITY,
+          payload: activityId,
+        });
+      } else {
+        throw new Error("Seems there are some Server Problems");
+      }
+    } catch {
+      throw new Error("Error by deleting your favourite");
     }
   };
 };

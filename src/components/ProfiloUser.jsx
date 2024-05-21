@@ -1,8 +1,9 @@
 import { Alert, Col, Container, Image, Row } from "react-bootstrap";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModaleUpdateProfile from "./ModaleUpdateProfile";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFavouriteActivities } from "../redux/action";
 import SingleActivity from "./SingleActivity";
 
 const ProfiloUser = () => {
@@ -11,11 +12,19 @@ const ProfiloUser = () => {
   const handleShow = () => setShow(true);
 
   const currentUser = useSelector((state) => state.loginUserReducer.user);
-
-  const listOfFavourites = useSelector(
-    (state) => state.getFavouriteActivities.content
+  const accessToken = useSelector(
+    (state) => state.loginUserReducer.accessToken
   );
-  console.log("List of favourite Activities", listOfFavourites);
+
+  const listOfFavouriteActivities = useSelector(
+    (state) => state.getFavouriteActivities
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFavouriteActivities(accessToken));
+  }, [dispatch, accessToken]);
 
   return (
     <Container>
@@ -48,16 +57,16 @@ const ProfiloUser = () => {
         </Col>
       </Row>
       <Row className="flex-column">
-        <Col>Le mie attività preferite</Col>
-        {listOfFavourites && listOfFavourites.length > 0 ? (
-          listOfFavourites.map((activity, index) => {
-            return <SingleActivity key={index} activity={activity} />;
-          })
+        {listOfFavouriteActivities && listOfFavouriteActivities.length > 0 ? (
+          listOfFavouriteActivities.map((activity) => (
+            <SingleActivity key={activity.id} activity={activity} />
+          ))
         ) : (
           <Alert variant="info" className="text-center my-5">
-            No Favourites found
+            No Activities found
           </Alert>
         )}
+
         <Col>I miei luoghi preferiti </Col>
       </Row>
     </Container>

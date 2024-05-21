@@ -8,6 +8,7 @@ import {
   deleteSingleActivity,
   fetchAddFavouriteActivities,
   fetchAllActivities,
+  fetchDeleteFavouriteActivity,
 } from "../redux/action";
 
 const SingleActivity = ({ activity }) => {
@@ -60,12 +61,19 @@ const SingleActivity = ({ activity }) => {
 
   const handleFavourite = () => {
     try {
-      dispatch(fetchAddFavouriteActivities(userLoggedIn, activity));
+      dispatch(fetchAddFavouriteActivities(userLoggedIn, activity.id));
     } catch (error) {
-      console.error("Error by adding favourite Activity");
+      console.error("Error adding favourite Activity");
     }
   };
 
+  const handleDeleteFavourite = async () => {
+    try {
+      await dispatch(fetchDeleteFavouriteActivity(userLoggedIn, activity.id));
+    } catch (error) {
+      console.error("Error deleting favourite Activity");
+    }
+  };
   return (
     <Col xs={12} md={6} lg={4}>
       {frontSide === true ? (
@@ -132,6 +140,7 @@ const SingleActivity = ({ activity }) => {
               </Button>
               <i className="bi bi-suit-heart" onClick={handleFavourite}></i>
             </div>
+            <i className="bi bi-trash3" onClick={handleDeleteFavourite}></i>
           </Card.Body>
         </Card>
       ) : (
