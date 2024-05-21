@@ -17,7 +17,7 @@ const ProfiloUser = () => {
   );
 
   const listOfFavouriteActivities = useSelector(
-    (state) => state.getFavouriteActivities
+    (state) => state.getFavouriteActivities.content
   );
 
   const dispatch = useDispatch();
@@ -25,6 +25,10 @@ const ProfiloUser = () => {
   useEffect(() => {
     dispatch(fetchFavouriteActivities(accessToken));
   }, [dispatch, accessToken]);
+
+  console.log("Current User:", currentUser);
+  console.log("Access Token:", accessToken);
+  console.log("List of Favourite Activities:", listOfFavouriteActivities);
 
   return (
     <Container>
@@ -57,7 +61,7 @@ const ProfiloUser = () => {
         </Col>
       </Row>
       <Row className="flex-column">
-        {listOfFavouriteActivities && listOfFavouriteActivities.length > 0 ? (
+        {listOfFavouriteActivities.length > 0 ? (
           listOfFavouriteActivities.map((activity) => (
             <SingleActivity key={activity.id} activity={activity} />
           ))
@@ -66,7 +70,6 @@ const ProfiloUser = () => {
             No Activities found
           </Alert>
         )}
-
         <Col>I miei luoghi preferiti </Col>
       </Row>
     </Container>
