@@ -24,7 +24,7 @@ const HomepageLoggedUser = () => {
   }, [dispatch]);
   //----------------------------------------------------------------------------------------------//
   return (
-    <Container fluid>
+    <Container fluid className="pb-3">
       <Row className="justify-content-center py-5">
         <Col xs={12} md={6} lg={4} className="text-center">
           <Button

@@ -4,7 +4,11 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ModaleModificaAttivita from "./ModaleModificaAttivita";
-import { deleteSingleActivity, fetchAllActivities } from "../redux/action";
+import {
+  deleteSingleActivity,
+  fetchAddFavouriteActivities,
+  fetchAllActivities,
+} from "../redux/action";
 
 const SingleActivity = ({ activity }) => {
   const dateFormatter = (date) => {
@@ -53,6 +57,14 @@ const SingleActivity = ({ activity }) => {
   const [frontSide, setFrontSide] = useState(true);
 
   const [showButtons, setShowButtons] = useState(false);
+
+  const handleFavourite = () => {
+    try {
+      dispatch(fetchAddFavouriteActivities(userLoggedIn, activity));
+    } catch (error) {
+      console.error("Error by adding favourite Activity");
+    }
+  };
 
   return (
     <Col xs={12} md={6} lg={4}>
@@ -118,7 +130,7 @@ const SingleActivity = ({ activity }) => {
               >
                 Più dettagli
               </Button>
-              <i className="bi bi-suit-heart"></i>
+              <i className="bi bi-suit-heart" onClick={handleFavourite}></i>
             </div>
           </Card.Body>
         </Card>

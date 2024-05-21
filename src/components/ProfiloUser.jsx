@@ -1,8 +1,9 @@
-import { Col, Container, Image, Row } from "react-bootstrap";
+import { Alert, Col, Container, Image, Row } from "react-bootstrap";
 
 import { useState } from "react";
 import ModaleUpdateProfile from "./ModaleUpdateProfile";
 import { useSelector } from "react-redux";
+import SingleActivity from "./SingleActivity";
 
 const ProfiloUser = () => {
   const [show, setShow] = useState(false);
@@ -11,10 +12,10 @@ const ProfiloUser = () => {
 
   const currentUser = useSelector((state) => state.loginUserReducer.user);
 
-  const favouriteActivities = useSelector(
-    (state) => state.favouriteActivitiesReducer
+  const listOfFavourites = useSelector(
+    (state) => state.getFavouriteActivities.content
   );
-  console.log(favouriteActivities);
+  console.log("List of favourite Activities", listOfFavourites);
 
   return (
     <Container>
@@ -26,7 +27,6 @@ const ProfiloUser = () => {
             width={"130vh"}
             height={"130vh"}
           />
-          <Col></Col>
         </Col>
         <Col xs={12} md={7} lg={8}>
           <div className="d-flex justify-content-between">
@@ -48,7 +48,16 @@ const ProfiloUser = () => {
         </Col>
       </Row>
       <Row className="flex-column">
-        <Col>Le mie attività preferite {favouriteActivities}</Col>
+        <Col>Le mie attività preferite</Col>
+        {listOfFavourites && listOfFavourites.length > 0 ? (
+          listOfFavourites.map((activity, index) => {
+            return <SingleActivity key={index} activity={activity} />;
+          })
+        ) : (
+          <Alert variant="info" className="text-center my-5">
+            No Favourites found
+          </Alert>
+        )}
         <Col>I miei luoghi preferiti </Col>
       </Row>
     </Container>

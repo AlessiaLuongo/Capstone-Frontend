@@ -15,6 +15,8 @@ export const UPDATE_USER_INFOS = "UPDATE_USER_INFOS";
 export const UPLOAD_ACTIVITY_PICTURE = "UPLOAD_ACTIVITY_PICTURE";
 export const UPLOAD_LOCATION_PICTURE = "UPLOAD_LOCATION_PICTURE";
 export const LOGOUT_USER = "LOGOUT_USER";
+export const GET_FAVOURITE_ACTIVITIES = "GET_FAVOURITE_ACTIVITIES";
+export const ADD_FAVOURITE_ACTIVITIES = "ADD_FAVOURITE_ACTIVITIES";
 
 //-------------------------------------REGISTER----------------------------------------------//
 
@@ -218,6 +220,61 @@ export const deleteSingleActivity = (activityId, accessToken) => {
     if (response.ok) {
       dispatch({
         type: DELETE_SINGLE_ACTIVITY,
+      });
+    } else {
+      throw new Error("Seems there are some Server Problems");
+    }
+  };
+};
+
+//-------------------------------------GET FAVOURITE ACTIVITIES----------------------------------------//
+
+export const fetchFavouriteActivities = (accessToken) => {
+  return async (dispatch) => {
+    const response = await fetch(
+      "http://localhost:3001/users/me/favouriteActivities",
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-type": "application/json",
+        },
+      }
+    );
+    if (response.ok) {
+      const data = await response.json();
+
+      dispatch({
+        type: GET_FAVOURITE_ACTIVITIES,
+        payload: data,
+      });
+    } else {
+      throw new Error("Seems there are some Server Problems");
+    }
+  };
+};
+
+//-------------------------------------ADD FAVOURITE ACTIVITIY----------------------------------------//
+
+export const fetchAddFavouriteActivities = (accessToken, activity) => {
+  return async (dispatch) => {
+    const response = await fetch(
+      "http://localhost:3001/users/me/favouriteActivities",
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(activity),
+      }
+    );
+    if (response.ok) {
+      const data = await response.json();
+      console.log("data", data);
+      dispatch({
+        type: ADD_FAVOURITE_ACTIVITIES,
+        payload: data,
       });
     } else {
       throw new Error("Seems there are some Server Problems");

@@ -21,9 +21,6 @@ main,
 
 footer {
   background-color: map-get($map: $new-theme-colors, $key: "primary");
-  position: fixed;
-  bottom: 0;
-  width: 100%;
 }
 
 footer i {

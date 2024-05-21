@@ -36,7 +36,7 @@ const AllLocations = () => {
   //----------------------------------------------------------------------------------------------//
 
   return (
-    <Container fluid>
+    <Container fluid className="pb-3">
       <SearchBar
         onSearch={handleSearch}
         inputValue={inputValue}
