@@ -3,8 +3,12 @@ import { Alert, Col, Container, Image, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import ModaleUpdateProfile from "./ModaleUpdateProfile";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFavouriteActivities } from "../redux/action";
+import {
+  fetchFavouriteActivities,
+  fetchFavouriteLocations,
+} from "../redux/action";
 import SingleActivity from "./SingleActivity";
+import SingleLocation from "./SingleLocation";
 
 const ProfiloUser = () => {
   const [show, setShow] = useState(false);
@@ -26,9 +30,13 @@ const ProfiloUser = () => {
     dispatch(fetchFavouriteActivities(accessToken));
   }, [dispatch, accessToken]);
 
-  console.log("Current User:", currentUser);
-  console.log("Access Token:", accessToken);
-  console.log("List of Favourite Activities:", listOfFavouriteActivities);
+  const listOfFavouriteLocations = useSelector(
+    (state) => state.getFavouriteLocations.content
+  );
+
+  useEffect(() => {
+    dispatch(fetchFavouriteLocations(accessToken));
+  }, [dispatch, accessToken]);
 
   return (
     <Container>
@@ -61,6 +69,9 @@ const ProfiloUser = () => {
         </Col>
       </Row>
       <Row className="flex-column">
+        <Col xs={12} md={5} lg={4}>
+          Le mie attività preferite{" "}
+        </Col>
         {listOfFavouriteActivities.length > 0 ? (
           listOfFavouriteActivities.map((activity) => (
             <SingleActivity key={activity.id} activity={activity} />
@@ -70,7 +81,18 @@ const ProfiloUser = () => {
             No Activities found
           </Alert>
         )}
-        <Col>I miei luoghi preferiti </Col>
+        <Col xs={12} md={5} lg={4}>
+          I miei luoghi preferiti{" "}
+        </Col>
+        {listOfFavouriteLocations.length > 0 ? (
+          listOfFavouriteLocations.map((location) => (
+            <SingleLocation key={location.id} location={location} />
+          ))
+        ) : (
+          <Alert variant="info" className="text-center my-5">
+            No Locations found
+          </Alert>
+        )}
       </Row>
     </Container>
   );

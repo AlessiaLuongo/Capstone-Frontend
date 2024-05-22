@@ -2,7 +2,12 @@ import { Button, Card, CardText, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import ModaleModificaLocation from "./ModaleModificaLocation";
-import { deleteSingleLocation, fetchAllLocations } from "../redux/action";
+import {
+  deleteSingleLocation,
+  fetchAddFavouriteLocations,
+  fetchAllLocations,
+  fetchDeleteFavouriteLocation,
+} from "../redux/action";
 
 const SingleLocation = ({ location }) => {
   const dateFormatter = (date) => {
@@ -52,6 +57,34 @@ const SingleLocation = ({ location }) => {
 
   const [showButtons, setShowButtons] = useState(false);
 
+  const listOfFavourites = useSelector(
+    (state) => state.getFavouriteLocations.content
+  );
+  console.log(listOfFavourites);
+
+  const isFavourite = listOfFavourites.some(
+    (favourite) => favourite.id === location.id
+  );
+
+  const handleFavourite = () => {
+    if (isFavourite) {
+      console.warn("Location is already a favourite");
+      return;
+    }
+    try {
+      dispatch(fetchAddFavouriteLocations(userLoggedIn, location.id));
+    } catch (error) {
+      console.error("Error adding favourite Location");
+    }
+  };
+  const handleDeleteFavourite = async () => {
+    try {
+      await dispatch(fetchDeleteFavouriteLocation(userLoggedIn, location.id));
+    } catch (error) {
+      console.error("Error deleting favourite Location");
+    }
+  };
+
   return (
     <Col xs={12} md={6} lg={4}>
       {frontSide ? (
@@ -100,15 +133,17 @@ const SingleLocation = ({ location }) => {
               {rateStar(location.rate)}
             </Card.Subtitle>
             <Card.Text>{location.description}</Card.Text>
+
             <div className="d-flex align-items-end justify-content-between">
-              <div>
-                <Button
-                  variant="outline-dark"
-                  onClick={() => setFrontSide(false)}
-                >
-                  Più dettagli
-                </Button>
-              </div>
+              <Button onClick={() => setFrontSide(false)}>Più dettagli</Button>
+              {isFavourite ? (
+                <i
+                  className="bi bi-suit-heart-fill"
+                  onClick={handleDeleteFavourite}
+                ></i>
+              ) : (
+                <i className="bi bi-suit-heart" onClick={handleFavourite}></i>
+              )}
             </div>
           </Card.Body>
         </Card>
@@ -126,16 +161,18 @@ const SingleLocation = ({ location }) => {
             </Card.Subtitle>
             <Card.Text>{location.description}</Card.Text>
             <Card.Text>{location.outdoor}</Card.Text>
-            <Card.Text>{location.price} €</Card.Text>
+            {location.price !== null ? (
+              <Card.Text>{location.price} €</Card.Text>
+            ) : (
+              <Card.Text>Nessun prezzo disponibile</Card.Text>
+            )}
+
             <Card.Text>{location.locationType}</Card.Text>
             <Card.Text>{location.influxOfPeople}</Card.Text>
 
             <div className="d-flex align-items-end justify-content-between">
               <div>
-                <Button
-                  variant="outline-dark"
-                  onClick={() => setFrontSide(true)}
-                >
+                <Button onClick={() => setFrontSide(true)}>
                   Torna indietro
                 </Button>
               </div>

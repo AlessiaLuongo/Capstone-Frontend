@@ -18,6 +18,9 @@ export const LOGOUT_USER = "LOGOUT_USER";
 export const GET_FAVOURITE_ACTIVITIES = "GET_FAVOURITE_ACTIVITIES";
 export const ADD_FAVOURITE_ACTIVITIES = "ADD_FAVOURITE_ACTIVITIES";
 export const DELETE_FAVOURITE_ACTIVITY = "DELETE_FAVOURITE_ACTIVITY";
+export const GET_FAVOURITE_LOCATIONS = "GET_FAVOURITE_LOCATIONS";
+export const ADD_FAVOURITE_LOCATION = "ADD_FAVOURITE_LOCATION";
+export const DELETE_FAVOURITE_LOCATION = "DELETE_FAVOURITE_LOCATION";
 
 //-------------------------------------REGISTER----------------------------------------------//
 
@@ -288,7 +291,7 @@ export const fetchDeleteFavouriteActivity = (accessToken, activityId) => {
   return async (dispatch) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/activities/users/me/favourite-activities/${activityId}`,
+        `http://localhost:3001/users/me/favourite-activities/${activityId}`,
         {
           method: "DELETE",
           headers: {
@@ -420,6 +423,90 @@ export const deleteSingleLocation = (locationId, accessToken) => {
     }
   };
 };
+
+//-------------------------------------GET FAVOURITE LOCATIONS----------------------------------------//
+
+export const fetchFavouriteLocations = (accessToken) => {
+  return async (dispatch) => {
+    const response = await fetch(
+      "http://localhost:3001/users/me/favourite-locations",
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-type": "application/json",
+        },
+      }
+    );
+    if (response.ok) {
+      const data = await response.json();
+      console.log("fav", data);
+      dispatch({
+        type: GET_FAVOURITE_LOCATIONS,
+        payload: data,
+      });
+    } else {
+      throw new Error("Seems there are some Server Problems");
+    }
+  };
+};
+
+//-------------------------------------ADD FAVOURITE LOCATION----------------------------------------//
+
+export const fetchAddFavouriteLocations = (accessToken, locationId) => {
+  return async (dispatch) => {
+    const response = await fetch(
+      `http://localhost:3001/users/me/favourite-locations/${locationId}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-type": "application/json",
+        },
+      }
+    );
+    if (response.ok) {
+      const data = await response.json();
+      console.log("data", data);
+      dispatch({
+        type: ADD_FAVOURITE_LOCATION,
+        payload: data,
+      });
+    } else {
+      throw new Error("Seems there are some Server Problems");
+    }
+  };
+};
+
+//-------------------------------------DELETE FAVOURITE LOCATION--------------------------------------------//
+
+export const fetchDeleteFavouriteLocation = (accessToken, locationId) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/users/me/favourite-locations/${locationId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        dispatch({
+          type: DELETE_FAVOURITE_LOCATION,
+          payload: locationId,
+        });
+      } else {
+        throw new Error("Seems there are some Server Problems");
+      }
+    } catch {
+      throw new Error("Error by deleting your favourite");
+    }
+  };
+};
+
 //-------------------------------------GET THE BEST POSTS--------------------------------------------//
 
 export const fetchTheBestPosts = () => {

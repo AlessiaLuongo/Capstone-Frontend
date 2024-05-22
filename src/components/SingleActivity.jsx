@@ -59,7 +59,20 @@ const SingleActivity = ({ activity }) => {
 
   const [showButtons, setShowButtons] = useState(false);
 
+  const listOfFavourites = useSelector(
+    (state) => state.getFavouriteActivities.content
+  );
+  console.log(listOfFavourites);
+
+  const isFavourite = listOfFavourites.some(
+    (favourite) => favourite.id === activity.id
+  );
+
   const handleFavourite = () => {
+    if (isFavourite) {
+      console.warn("Activity is already a favourite");
+      return;
+    }
     try {
       dispatch(fetchAddFavouriteActivities(userLoggedIn, activity.id));
     } catch (error) {
@@ -74,6 +87,7 @@ const SingleActivity = ({ activity }) => {
       console.error("Error deleting favourite Activity");
     }
   };
+
   return (
     <Col xs={12} md={6} lg={4}>
       {frontSide === true ? (
@@ -132,15 +146,16 @@ const SingleActivity = ({ activity }) => {
             <Card.Text>{activity.description}</Card.Text>
 
             <div className="d-flex align-items-end justify-content-between">
-              <Button
-                variant="outline-dark"
-                onClick={() => setFrontSide(false)}
-              >
-                Più dettagli
-              </Button>
-              <i className="bi bi-suit-heart" onClick={handleFavourite}></i>
+              <Button onClick={() => setFrontSide(false)}>Più dettagli</Button>
+              {isFavourite ? (
+                <i
+                  className="bi bi-suit-heart-fill"
+                  onClick={handleDeleteFavourite}
+                ></i>
+              ) : (
+                <i className="bi bi-suit-heart" onClick={handleFavourite}></i>
+              )}
             </div>
-            <i className="bi bi-trash3" onClick={handleDeleteFavourite}></i>
           </Card.Body>
         </Card>
       ) : (
@@ -167,10 +182,7 @@ const SingleActivity = ({ activity }) => {
 
             <div className="d-flex align-items-end justify-content-between">
               <div>
-                <Button
-                  variant="outline-dark"
-                  onClick={() => setFrontSide(true)}
-                >
+                <Button onClick={() => setFrontSide(true)}>
                   Torna indietro
                 </Button>
               </div>
