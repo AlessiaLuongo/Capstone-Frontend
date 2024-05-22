@@ -1,4 +1,4 @@
-import { Card, Col } from "react-bootstrap";
+import { Button, Card, Col } from "react-bootstrap";
 
 const SingleBESTPost = ({ bestPost }) => {
   const dateFormatter = (date) => {
@@ -38,6 +38,7 @@ const SingleBESTPost = ({ bestPost }) => {
           </Card.Subtitle>
           <Card.Text>{bestPost.description}</Card.Text>
         </Card.Body>
+        <Button id="best-post-button">Scopri di più</Button>
       </Card>
     </Col>
   );

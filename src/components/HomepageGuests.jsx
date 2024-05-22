@@ -20,7 +20,7 @@ const HomepageGuests = () => {
   }, [dispatch]);
   //----------------------------------------------------------------------------------------------//
   return (
-    <Container fluid className="pb-3">
+    <Container fluid className="pb-5">
       <Row className="justify-content-center align-content-center gy-4 pt-3 mx-5">
         {listOfTheBest && listOfTheBest.length > 0 ? (
           listOfTheBest.map((bestPost) => {

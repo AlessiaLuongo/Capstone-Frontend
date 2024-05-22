@@ -14,9 +14,20 @@ $new-theme-colors: (
 );
 
 html,
-main,
-.modal-header {
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
   background-color: map-get($map: $new-theme-colors, $key: "background");
+  flex-grow: 1;
 }
 
 footer {
@@ -25,6 +36,18 @@ footer {
 
 footer i {
   color: map-get($map: $new-theme-colors, $key: "secondary");
+}
+
+.bi-suit-heart-fill {
+  color: map-get($map: $new-theme-colors, $key: "secondary");
+}
+
+.bi-suit-heart:hover {
+  color: map-get($map: $new-theme-colors, $key: "secondary");
+}
+
+.bi-suit-heart:hover {
+  color: map-get($map: $new-theme-colors, $key: "primary");
 }
 
 .card {
@@ -37,6 +60,14 @@ footer i {
   min-height: 300px;
   max-height: 300px;
   object-fit: fill;
+}
+
+.card {
+  transition: all 0.4s ease 0s;
+}
+
+.card:hover {
+  box-shadow: 0px 5px 40px -10px;
 }
 
 ::-webkit-scrollbar {
@@ -58,6 +89,10 @@ footer i {
 
 main i:hover {
   color: map-get($map: $new-theme-colors, $key: "primary");
+}
+
+#best-post-button {
+  border-radius: 5%;
 }
 
 $theme-colors: map-merge($theme-colors, $new-theme-colors);
