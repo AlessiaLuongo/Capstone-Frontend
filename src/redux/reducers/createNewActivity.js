@@ -1,8 +1,8 @@
-import { CREATE_NEW_ACTIVITY, TURN_OFF_SPINNER } from "../action";
+import { CREATE_NEW_ACTIVITY, START_LOADER, STOP_LOADER } from "../action";
 
 const initialState = {
   content: [],
-  isLoading: true,
+  isLoading: false,
 };
 
 const createNewActivityReducer = (state = initialState, action) => {
@@ -11,8 +11,15 @@ const createNewActivityReducer = (state = initialState, action) => {
       return {
         ...state,
         content: action.payload,
+        isLoading: false,
       };
-    case TURN_OFF_SPINNER:
+
+    case START_LOADER:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case STOP_LOADER:
       return {
         ...state,
         isLoading: false,

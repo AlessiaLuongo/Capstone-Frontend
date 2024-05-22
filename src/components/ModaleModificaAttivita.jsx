@@ -1,7 +1,12 @@
-import { Button, Form, FormGroup, Modal } from "react-bootstrap";
-import { fetchAllActivities, updateSingleActivity } from "../redux/action";
+import { Button, Form, FormGroup, Modal, Spinner } from "react-bootstrap";
+import {
+  fetchAllActivities,
+  startLoader,
+  stopLoader,
+  updateSingleActivity,
+} from "../redux/action";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const ModaleModificaAttivita = ({ show, handleClose, activity, token }) => {
   const formattedDateToSendBack = (date) => {
@@ -23,10 +28,14 @@ const ModaleModificaAttivita = ({ show, handleClose, activity, token }) => {
   const dispatch = useDispatch();
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    dispatch(startLoader());
     await dispatch(updateSingleActivity(activity.id, updatedActivity, token));
     dispatch(fetchAllActivities());
+    dispatch(stopLoader());
     handleClose();
   };
+
+  const isLoading = useSelector((state) => state.updateActivity.isLoading);
 
   //----------------------------------------------------------------------------------------------//
   return (
@@ -172,9 +181,15 @@ const ModaleModificaAttivita = ({ show, handleClose, activity, token }) => {
             </Form.Select>
           </FormGroup>
           <Modal.Footer>
-            <Button variant="primary" type="submit">
-              Salva
-            </Button>
+            {isLoading ? (
+              <div className="d-flex justify-content-center align-items-center w-100">
+                <Spinner animation="border" role="status"></Spinner>
+              </div>
+            ) : (
+              <Button variant="primary" type="submit">
+                Salva
+              </Button>
+            )}
           </Modal.Footer>
         </Form>
       </Modal.Body>

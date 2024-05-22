@@ -1,6 +1,11 @@
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button, Form, Modal, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUpdateUserInfos, fetchUploadImage } from "../redux/action";
+import {
+  fetchUpdateUserInfos,
+  fetchUploadImage,
+  startLoader,
+  stopLoader,
+} from "../redux/action";
 import { useState } from "react";
 
 const ModaleUpdateProfile = ({ handleClose, show, onSave }) => {
@@ -10,6 +15,7 @@ const ModaleUpdateProfile = ({ handleClose, show, onSave }) => {
     (state) => state.loginUserReducer.accessToken
   );
   const user = useSelector((state) => state.loginUserReducer.user);
+  const isLoading = useSelector((state) => state.loginUserReducer.isLoading);
 
   const [updatedInfos, setUpdatedInfos] = useState({
     username: user.username,
@@ -23,11 +29,13 @@ const ModaleUpdateProfile = ({ handleClose, show, onSave }) => {
 
   const handleSaveInfos = async (e) => {
     e.preventDefault();
+    dispatch(startLoader());
 
     if (avatar) {
       await dispatch(fetchUploadImage(accessToken, avatar));
     }
     await dispatch(fetchUpdateUserInfos(accessToken, updatedInfos));
+    dispatch(stopLoader());
     onSave();
   };
 
@@ -90,7 +98,15 @@ const ModaleUpdateProfile = ({ handleClose, show, onSave }) => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit">Salva</Button>{" "}
+          {isLoading ? (
+            <div className="d-flex justify-content-center align-items-center w-100">
+              <Spinner animation="border" role="status"></Spinner>
+            </div>
+          ) : (
+            <Button variant="primary" type="submit">
+              Salva
+            </Button>
+          )}
         </Modal.Footer>
       </Form>
     </Modal>

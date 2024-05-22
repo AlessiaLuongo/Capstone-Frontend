@@ -1,7 +1,8 @@
-import { GET_THE_BEST_POSTS } from "../action";
+import { GET_THE_BEST_POSTS, STOP_LOADER } from "../action";
 
 const initialState = {
   content: [],
+  isLoading: true,
 };
 
 const getTheBestPosts = (state = initialState, action) => {
@@ -10,6 +11,13 @@ const getTheBestPosts = (state = initialState, action) => {
       return {
         ...state,
         content: action.payload.data,
+        isLoading: false,
+      };
+
+    case STOP_LOADER:
+      return {
+        ...state,
+        isLoading: false,
       };
 
     default:

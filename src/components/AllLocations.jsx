@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Alert, Container, Row } from "react-bootstrap";
+import { Alert, Container, Row, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllLocations } from "../redux/action";
+import { fetchAllLocations, stopLoader } from "../redux/action";
 import SingleLocation from "./SingleLocation";
 import SearchBar from "./SearchBar";
 
@@ -13,6 +13,7 @@ const AllLocations = () => {
 
   useEffect(() => {
     dispatch(fetchAllLocations());
+    dispatch(stopLoader());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
@@ -33,6 +34,8 @@ const AllLocations = () => {
     }
   }, [inputValue, listaLocations]);
 
+  const isLoading = useSelector((state) => state.getAllActivities.isLoading);
+
   //----------------------------------------------------------------------------------------------//
 
   return (
@@ -42,6 +45,11 @@ const AllLocations = () => {
         inputValue={inputValue}
         setInputValue={setInputValue}
       />
+      {isLoading && (
+        <div className="d-flex justify-content-center align-item-center">
+          <Spinner animation="border" role="status"></Spinner>
+        </div>
+      )}
       <Row className="justify-content-center align-content-center gy-4 pt-3 mx-5">
         {filteredLocations && filteredLocations.length > 0 ? (
           filteredLocations.map((location) => {

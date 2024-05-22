@@ -21,7 +21,8 @@ export const DELETE_FAVOURITE_ACTIVITY = "DELETE_FAVOURITE_ACTIVITY";
 export const GET_FAVOURITE_LOCATIONS = "GET_FAVOURITE_LOCATIONS";
 export const ADD_FAVOURITE_LOCATION = "ADD_FAVOURITE_LOCATION";
 export const DELETE_FAVOURITE_LOCATION = "DELETE_FAVOURITE_LOCATION";
-export const TURN_OFF_SPINNER = "TURN_OFF_SPINNER";
+export const START_LOADER = "START_LOADER";
+export const STOP_LOADER = "STOP_LOADER";
 
 //-------------------------------------REGISTER----------------------------------------------//
 
@@ -150,31 +151,23 @@ export const fetchAllActivities = (page = 0, size = 10) => {
 
 export const fetchCreateNewActivity = (body, accessToken) => {
   return async (dispatch) => {
-    try {
-      const response = await fetch("http://localhost:3001/activities/me", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
-      if (response.ok) {
-        const data = await response.json();
+    const response = await fetch("http://localhost:3001/activities/me", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    if (response.ok) {
+      const data = await response.json();
 
-        return dispatch({
-          type: CREATE_NEW_ACTIVITY,
-          payload: data,
-        });
-      } else {
-        throw new Error("Problem with Access Token");
-      }
-    } catch {
-      throw Error;
-    } finally {
-      dispatch({
-        type: TURN_OFF_SPINNER,
+      return dispatch({
+        type: CREATE_NEW_ACTIVITY,
+        payload: data,
       });
+    } else {
+      throw new Error("Problem with Access Token");
     }
   };
 };
@@ -636,4 +629,16 @@ export const uploadLocationPicture = (accessToken, picture, locationId) => {
       throw new Error("Problem uploading the picture");
     }
   };
+};
+
+export const startLoader = () => (dispatch) => {
+  dispatch({
+    type: START_LOADER,
+  });
+};
+
+export const stopLoader = () => (dispatch) => {
+  dispatch({
+    type: STOP_LOADER,
+  });
 };

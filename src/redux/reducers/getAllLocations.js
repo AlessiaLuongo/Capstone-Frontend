@@ -1,7 +1,8 @@
-import { GET_ALL_LOCATIONS } from "../action";
+import { GET_ALL_LOCATIONS, STOP_LOADER } from "../action";
 
 const initialState = {
   content: [],
+  isLoading: true,
 };
 
 const getAllLocations = (state = initialState, action) => {
@@ -10,8 +11,14 @@ const getAllLocations = (state = initialState, action) => {
       return {
         ...state,
         content: action.payload.content,
+        isLoading: false,
       };
 
+    case STOP_LOADER:
+      return {
+        ...state,
+        isLoading: false,
+      };
     default:
       return state;
   }

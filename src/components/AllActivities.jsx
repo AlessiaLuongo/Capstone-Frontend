@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import SingleActivity from "./SingleActivity";
 import { useEffect, useState } from "react";
-import { fetchAllActivities } from "../redux/action";
-import { Alert, Container, Row } from "react-bootstrap";
+import { fetchAllActivities, stopLoader } from "../redux/action";
+import { Alert, Container, Row, Spinner } from "react-bootstrap";
 import SearchBar from "./SearchBar";
 
 const AllActivities = () => {
@@ -19,6 +19,7 @@ const AllActivities = () => {
 
   useEffect(() => {
     dispatch(fetchAllActivities());
+    dispatch(stopLoader());
   }, [dispatch]);
 
   useEffect(() => {
@@ -34,13 +35,20 @@ const AllActivities = () => {
     }
   }, [inputValue, listaActivities]);
 
+  const isLoading = useSelector((state) => state.getAllActivities.isLoading);
+
   return (
-    <Container fluid className="pb-5">
+    <Container fluid className="pb-5 ">
       <SearchBar
         onSearch={handleSearch}
         inputValue={inputValue}
         setInputValue={setInputValue}
-      />
+      />{" "}
+      {isLoading && (
+        <div className="d-flex justify-content-center align-item-center">
+          <Spinner animation="border" role="status"></Spinner>
+        </div>
+      )}
       <Row className="justify-content-center align-content-center gy-4 pt-3 mx-5">
         {filteredActivities && filteredActivities.length > 0 ? (
           filteredActivities.map((activity) => (

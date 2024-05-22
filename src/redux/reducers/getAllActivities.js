@@ -1,7 +1,8 @@
-import { GET_ALL_ACTIVITIES } from "../action";
+import { GET_ALL_ACTIVITIES, STOP_LOADER } from "../action";
 
 const initialState = {
   content: [],
+  isLoading: true,
 };
 
 const getAllActivities = (state = initialState, action) => {
@@ -10,6 +11,13 @@ const getAllActivities = (state = initialState, action) => {
       return {
         ...state,
         content: action.payload.content,
+        isLoading: false,
+      };
+
+    case STOP_LOADER:
+      return {
+        ...state,
+        isLoading: false,
       };
     default:
       return state;

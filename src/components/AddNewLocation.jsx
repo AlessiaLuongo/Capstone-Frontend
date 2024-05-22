@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { Button, Form, FormGroup, Modal } from "react-bootstrap";
+import { Button, Form, FormGroup, Modal, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCreateNewLocation,
   fetchTheBestPosts,
+  startLoader,
+  stopLoader,
   uploadLocationPicture,
 } from "../redux/action";
 
@@ -20,9 +22,7 @@ const AddNewLocation = ({ showLocation, handleCloseLocation }) => {
 
   const newLocationId = useSelector((state) => state.createNewLocation.id);
 
-  useEffect(() => {
-    console.log("Id aggiornato", newLocationId);
-  }, [newLocationId]);
+  useEffect(() => {}, [newLocationId]);
 
   const [picture, setPicture] = useState(null);
 
@@ -41,14 +41,14 @@ const AddNewLocation = ({ showLocation, handleCloseLocation }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    dispatch(startLoader());
     try {
       const result = await dispatch(
         fetchCreateNewLocation(newLocation, accessToken)
       );
 
       const newLocationId = result.payload.id;
-      console.log("questo è l'id", newLocationId);
+
       if (newLocationId) {
         await dispatch(
           uploadLocationPicture(accessToken, picture, newLocationId)
@@ -59,6 +59,7 @@ const AddNewLocation = ({ showLocation, handleCloseLocation }) => {
     } catch (error) {
       console.error("Error:", error);
     } finally {
+      dispatch(stopLoader());
       handleCloseLocation();
     }
   };
@@ -66,6 +67,8 @@ const AddNewLocation = ({ showLocation, handleCloseLocation }) => {
   const handlePicture = (e) => {
     setPicture(e.target.files[0]);
   };
+
+  const isLoading = useSelector((state) => state.createNewLocation.isLoading);
 
   //----------------------------------------------------------------------------------------------//
 
@@ -222,9 +225,15 @@ const AddNewLocation = ({ showLocation, handleCloseLocation }) => {
           </FormGroup>
 
           <Modal.Footer>
-            <Button variant="primary" type="submit">
-              Salva
-            </Button>
+            {isLoading ? (
+              <div className="d-flex justify-content-center align-items-center w-100">
+                <Spinner animation="border" role="status"></Spinner>
+              </div>
+            ) : (
+              <Button variant="primary" type="submit">
+                Salva
+              </Button>
+            )}
           </Modal.Footer>
         </Form>
       </Modal.Body>

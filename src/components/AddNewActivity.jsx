@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCreateNewActivity,
   fetchTheBestPosts,
+  startLoader,
+  stopLoader,
   uploadActivityPicture,
 } from "../redux/action";
 
@@ -46,14 +48,14 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    dispatch(startLoader());
     try {
       const result = await dispatch(
         fetchCreateNewActivity(newActivity, accessToken)
       );
 
       const newActivityId = result.payload.id;
-      console.log("questo è l'id", newActivityId);
+
       if (newActivityId) {
         await dispatch(
           uploadActivityPicture(accessToken, picture, newActivityId)
@@ -64,6 +66,7 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
     } catch (error) {
       console.error("Error:", error);
     } finally {
+      dispatch(stopLoader);
       handleCloseActivity();
     }
   };
@@ -71,6 +74,8 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
   const handlePicture = (e) => {
     setPicture(e.target.files[0]);
   };
+
+  const isLoading = useSelector((state) => state.createNewActivity.isLoading);
 
   //----------------------------------------------------------------------------------------------//
 
@@ -105,6 +110,7 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Label>Descrizione</Form.Label>
+
             <Form.Control
               as="textarea"
               rows={2}
@@ -236,15 +242,15 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
           )}
 
           <Modal.Footer>
-            {isLoading === true ? (
-              <Spinner animation="border" role="status" />
+            {isLoading ? (
+              <div className="d-flex justify-content-center align-items-center w-100">
+                <Spinner animation="border" role="status"></Spinner>
+              </div>
             ) : (
-              " "
+              <Button variant="primary" type="submit">
+                Salva
+              </Button>
             )}
-
-            <Button variant="primary" type="submit">
-              Salva
-            </Button>
           </Modal.Footer>
         </Form>
       </Modal.Body>

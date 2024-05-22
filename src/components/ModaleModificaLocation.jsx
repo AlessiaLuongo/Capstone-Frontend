@@ -1,7 +1,12 @@
 import { useState } from "react";
-import { Button, Form, FormGroup, Modal } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { fetchAllLocations, updateSingleLocation } from "../redux/action";
+import { Button, Form, FormGroup, Modal, Spinner } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchAllLocations,
+  startLoader,
+  stopLoader,
+  updateSingleLocation,
+} from "../redux/action";
 
 const ModaleModificaLocation = ({ show, handleClose, location, token }) => {
   const [updatedLocation, setUpdatedLocation] = useState({
@@ -19,10 +24,14 @@ const ModaleModificaLocation = ({ show, handleClose, location, token }) => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    dispatch(startLoader());
     await dispatch(updateSingleLocation(location.id, updatedLocation, token));
     dispatch(fetchAllLocations());
+    dispatch(stopLoader());
     handleClose();
   };
+
+  const isLoading = useSelector((state) => state.updateLocation.isLoading);
 
   return (
     <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
@@ -153,9 +162,15 @@ const ModaleModificaLocation = ({ show, handleClose, location, token }) => {
             </Form.Select>
           </FormGroup>
           <Modal.Footer>
-            <Button variant="primary" type="submit">
-              Salva
-            </Button>
+            {isLoading ? (
+              <div className="d-flex justify-content-center align-items-center w-100">
+                <Spinner animation="border" role="status"></Spinner>
+              </div>
+            ) : (
+              <Button variant="primary" type="submit">
+                Salva
+              </Button>
+            )}
           </Modal.Footer>
         </Form>
       </Modal.Body>
