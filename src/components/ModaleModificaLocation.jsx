@@ -11,6 +11,8 @@ const ModaleModificaLocation = ({ show, handleClose, location, token }) => {
     price: location.price,
     locationType: location.locationType,
     influxOfPeople: location.influxOfPeople,
+    picture: location.picture,
+    rate: location.rate,
   });
 
   const dispatch = useDispatch();

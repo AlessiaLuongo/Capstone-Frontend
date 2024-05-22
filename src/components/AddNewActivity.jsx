@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Form, FormGroup, Modal } from "react-bootstrap";
+import { Button, Form, FormGroup, Modal, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchCreateNewActivity,
@@ -236,6 +236,12 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
           )}
 
           <Modal.Footer>
+            {isLoading === true ? (
+              <Spinner animation="border" role="status" />
+            ) : (
+              " "
+            )}
+
             <Button variant="primary" type="submit">
               Salva
             </Button>

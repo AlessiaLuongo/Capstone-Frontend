@@ -1,7 +1,6 @@
 @charset "UTF-8";
 html,
 body {
-  height: 100%;
   margin: 0;
 }
 
@@ -69,6 +68,7 @@ footer i {
 
 main i:hover {
   color: #a3cbc2;
+  cursor: pointer;
 }
 
 #best-post-button {

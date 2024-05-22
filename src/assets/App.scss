@@ -15,7 +15,6 @@ $new-theme-colors: (
 
 html,
 body {
-  height: 100%;
   margin: 0;
 }
 
@@ -89,6 +88,7 @@ footer i {
 
 main i:hover {
   color: map-get($map: $new-theme-colors, $key: "primary");
+  cursor: pointer;
 }
 
 #best-post-button {

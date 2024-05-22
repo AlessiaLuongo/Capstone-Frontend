@@ -39,7 +39,7 @@ const ProfiloUser = () => {
   }, [dispatch, accessToken]);
 
   return (
-    <Container>
+    <Container fluid className="pb-5">
       <Row className="py-5 g-3 align-items-center ">
         <Col xs={12} md={5} lg={4}>
           <Image

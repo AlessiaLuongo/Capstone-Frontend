@@ -21,6 +21,7 @@ export const DELETE_FAVOURITE_ACTIVITY = "DELETE_FAVOURITE_ACTIVITY";
 export const GET_FAVOURITE_LOCATIONS = "GET_FAVOURITE_LOCATIONS";
 export const ADD_FAVOURITE_LOCATION = "ADD_FAVOURITE_LOCATION";
 export const DELETE_FAVOURITE_LOCATION = "DELETE_FAVOURITE_LOCATION";
+export const TURN_OFF_SPINNER = "TURN_OFF_SPINNER";
 
 //-------------------------------------REGISTER----------------------------------------------//
 
@@ -149,23 +150,31 @@ export const fetchAllActivities = (page = 0, size = 10) => {
 
 export const fetchCreateNewActivity = (body, accessToken) => {
   return async (dispatch) => {
-    const response = await fetch("http://localhost:3001/activities/me", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-    if (response.ok) {
-      const data = await response.json();
-
-      return dispatch({
-        type: CREATE_NEW_ACTIVITY,
-        payload: data,
+    try {
+      const response = await fetch("http://localhost:3001/activities/me", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(body),
       });
-    } else {
-      throw new Error("Problem with Access Token");
+      if (response.ok) {
+        const data = await response.json();
+
+        return dispatch({
+          type: CREATE_NEW_ACTIVITY,
+          payload: data,
+        });
+      } else {
+        throw new Error("Problem with Access Token");
+      }
+    } catch {
+      throw Error;
+    } finally {
+      dispatch({
+        type: TURN_OFF_SPINNER,
+      });
     }
   };
 };

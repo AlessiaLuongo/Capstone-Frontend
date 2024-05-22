@@ -8,8 +8,6 @@ const ModaleModificaAttivita = ({ show, handleClose, activity, token }) => {
     return new Date(date).toISOString().slice(0, 10);
   };
 
-  // const [date, setDate] = useState(new Date());
-
   const [updatedActivity, setUpdatedActivity] = useState({
     title: activity.title,
     description: activity.description,
@@ -18,6 +16,8 @@ const ModaleModificaAttivita = ({ show, handleClose, activity, token }) => {
     startDate: activity.startDate,
     endDate: activity.endDate,
     eventType: activity.eventType,
+    picture: activity.picture,
+    rate: activity.rate,
   });
 
   const dispatch = useDispatch();
