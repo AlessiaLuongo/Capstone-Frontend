@@ -29,7 +29,12 @@ const AllActivities = () => {
       const filteredList = listaActivities.filter(
         (activity) =>
           activity.title.toLowerCase().includes(inputValue.toLowerCase()) ||
-          activity.description.toLowerCase().includes(inputValue.toLowerCase())
+          activity.description
+            .toLowerCase()
+            .includes(inputValue.toLowerCase()) ||
+          activity.eventType
+            .toLowerCase()
+            .includes(inputValue.toLocaleLowerCase())
       );
       setFilteredActivities(filteredList);
     }

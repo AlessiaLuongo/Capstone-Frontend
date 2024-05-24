@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Alert, Button, Col, Container, Row } from "react-bootstrap";
+import { Alert, Button, Col, Container, Row, Spinner } from "react-bootstrap";
 import AddNewActivity from "./AddNewActivity";
 import AddNewLocation from "./AddNewLocation";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTheBestPosts } from "../redux/action";
+import { fetchTheBestPosts, startLoader, stopLoader } from "../redux/action";
 import SingleBESTPost from "./SingleBESTPost";
 
 const HomepageLoggedUser = () => {
@@ -19,9 +19,15 @@ const HomepageLoggedUser = () => {
   const dispatch = useDispatch();
   const listOfTheBest = useSelector((state) => state.getTheBestPosts.content);
 
+  const isLoading = useSelector((state) => state.getTheBestPosts.isLoading);
+
   useEffect(() => {
-    dispatch(fetchTheBestPosts());
+    dispatch(startLoader());
+    dispatch(fetchTheBestPosts()).finally(() => {
+      dispatch(stopLoader());
+    });
   }, [dispatch]);
+
   //----------------------------------------------------------------------------------------------//
   return (
     <Container fluid className="pb-5">
@@ -51,15 +57,21 @@ const HomepageLoggedUser = () => {
           />
         )}
       </Row>
-      <Row className="gy-4 mx-5 ">
-        {listOfTheBest && listOfTheBest.length > 0 ? (
-          listOfTheBest.map((bestPost) => {
-            return <SingleBESTPost key={bestPost.id} bestPost={bestPost} />;
-          })
-        ) : (
-          <Alert variant="info">No Locations found</Alert>
-        )}
-      </Row>
+      {isLoading ? (
+        <div className="d-flex justify-content-center align-item-center">
+          <Spinner animation="border" role="status"></Spinner>
+        </div>
+      ) : (
+        <Row className="gy-4 mx-5 ">
+          {listOfTheBest && listOfTheBest.length > 0 ? (
+            listOfTheBest.map((bestPost) => {
+              return <SingleBESTPost key={bestPost.id} bestPost={bestPost} />;
+            })
+          ) : (
+            <Alert variant="info">No Posts found</Alert>
+          )}
+        </Row>
+      )}
     </Container>
   );
 };

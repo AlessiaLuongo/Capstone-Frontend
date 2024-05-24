@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { registerUser } from "../redux/action";
+import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser, startLoader, stopLoader } from "../redux/action";
 import { useNavigate } from "react-router-dom";
 
 const RegisterComponent = () => {
@@ -18,9 +18,13 @@ const RegisterComponent = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(startLoader());
     dispatch(registerUser(newUser));
+    dispatch(stopLoader());
     navigate("/login");
   };
+
+  const isLoading = useSelector((state) => state.registerUser.isLoading);
 
   return (
     <Container className="p-4">
@@ -91,9 +95,15 @@ const RegisterComponent = () => {
                 }
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Registrati
-            </Button>
+            {isLoading ? (
+              <div className="d-flex justify-content-center align-items-center w-100">
+                <Spinner animation="border" role="status"></Spinner>
+              </div>
+            ) : (
+              <Button variant="primary" type="submit">
+                Salva
+              </Button>
+            )}
           </Form>
         </Col>
       </Row>

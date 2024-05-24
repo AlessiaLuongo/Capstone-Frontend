@@ -1,6 +1,11 @@
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { LoginUser, getCurrentUser } from "../redux/action";
+import {
+  LoginUser,
+  getCurrentUser,
+  startLoader,
+  stopLoader,
+} from "../redux/action";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -17,6 +22,16 @@ const LoginComponent = () => {
     }
   }, [dispatch, token, navigate]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(startLoader());
+    dispatch(LoginUser(login)).finally(() => {
+      dispatch(stopLoader());
+    });
+  };
+
+  const isLoading = useSelector((state) => state.loginUserReducer.isLoading);
+
   //----------------------------------------------------------------------------------------------//
 
   return (
@@ -24,12 +39,7 @@ const LoginComponent = () => {
       <Row className="justify-content-center align-content-center">
         <Col xs={12} md={6} lg={4}>
           <h2 className="mb-5 text-center">Welcome back!</h2>
-          <Form
-            onSubmit={(e) => {
-              e.preventDefault();
-              dispatch(LoginUser(login));
-            }}
-          >
+          <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -54,9 +64,15 @@ const LoginComponent = () => {
                 }}
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Login
-            </Button>
+            {isLoading ? (
+              <div className="d-flex justify-content-center align-items-center w-100">
+                <Spinner animation="border" role="status"></Spinner>
+              </div>
+            ) : (
+              <Button variant="primary" type="submit">
+                Salva
+              </Button>
+            )}
           </Form>
         </Col>
       </Row>

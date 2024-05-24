@@ -11,7 +11,7 @@ const createNewActivityReducer = (state = initialState, action) => {
       return {
         ...state,
         content: action.payload,
-        isLoading: false,
+        isLoading: true,
       };
 
     case START_LOADER:

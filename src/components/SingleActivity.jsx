@@ -1,6 +1,6 @@
-import { Button, Card, CardText, Col } from "react-bootstrap";
+import { Button, Card, CardText, Col, Spinner } from "react-bootstrap";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ModaleModificaAttivita from "./ModaleModificaAttivita";
@@ -9,6 +9,8 @@ import {
   fetchAddFavouriteActivities,
   fetchAllActivities,
   fetchDeleteFavouriteActivity,
+  startLoader,
+  stopLoader,
 } from "../redux/action";
 
 const SingleActivity = ({ activity }) => {
@@ -64,11 +66,7 @@ const SingleActivity = ({ activity }) => {
   );
   console.log(listOfFavourites);
 
-  const isFavourite = listOfFavourites.some(
-    (favourite) => favourite.id === activity.id
-  );
-
-  const handleFavourite = () => {
+  const handleFavourite = async () => {
     if (isFavourite) {
       console.warn("Activity is already a favourite");
       return;
@@ -78,15 +76,30 @@ const SingleActivity = ({ activity }) => {
     } catch (error) {
       console.error("Error adding favourite Activity");
     }
+    await setIsFavourite(!isFavourite);
   };
 
   const handleDeleteFavourite = async () => {
     try {
+      dispatch(startLoader());
       await dispatch(fetchDeleteFavouriteActivity(userLoggedIn, activity.id));
     } catch (error) {
       console.error("Error deleting favourite Activity");
+    } finally {
+      dispatch(stopLoader());
     }
+    await setIsFavourite(!isFavourite);
   };
+
+  const [isFavourite, setIsFavourite] = useState(false);
+
+  useEffect(() => {
+    setIsFavourite(
+      listOfFavourites.some((favourite) => favourite.id === activity.id)
+    );
+  }, [listOfFavourites, activity.id]);
+
+  const isLoading = useSelector((state) => state.deleteActivity.isLoading);
 
   return (
     <Col xs={12} md={6} lg={4}>
@@ -117,15 +130,18 @@ const SingleActivity = ({ activity }) => {
                       show={show}
                       token={userLoggedIn}
                     />
-                    {currentUser.id === activity.user.id ? (
-                      <i
-                        className="bi bi-trash3"
-                        onClick={() => {
-                          handleDelete();
-                        }}
-                      ></i>
-                    ) : (
-                      ""
+
+                    <i
+                      className="bi bi-trash3"
+                      onClick={() => {
+                        handleDelete();
+                      }}
+                    ></i>
+
+                    {isLoading && (
+                      <div className="d-flex justify-content-center align-items-center w-100">
+                        <Spinner animation="border" role="status"></Spinner>
+                      </div>
                     )}
                   </span>
                 ) : (
@@ -147,14 +163,15 @@ const SingleActivity = ({ activity }) => {
 
             <div className="d-flex align-items-end justify-content-between">
               <Button onClick={() => setFrontSide(false)}>Più dettagli</Button>
-              {isFavourite ? (
-                <i
-                  className="bi bi-suit-heart-fill"
-                  onClick={handleDeleteFavourite}
-                ></i>
-              ) : (
-                <i className="bi bi-suit-heart" onClick={handleFavourite}></i>
-              )}
+              {userLoggedIn &&
+                (isFavourite ? (
+                  <i
+                    className="bi bi-suit-heart-fill"
+                    onClick={handleDeleteFavourite}
+                  ></i>
+                ) : (
+                  <i className="bi bi-suit-heart" onClick={handleFavourite}></i>
+                ))}
             </div>
           </Card.Body>
         </Card>

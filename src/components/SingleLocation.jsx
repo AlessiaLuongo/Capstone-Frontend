@@ -1,12 +1,14 @@
-import { Button, Card, CardText, Col } from "react-bootstrap";
+import { Button, Card, CardText, Col, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModaleModificaLocation from "./ModaleModificaLocation";
 import {
   deleteSingleLocation,
   fetchAddFavouriteLocations,
   fetchAllLocations,
   fetchDeleteFavouriteLocation,
+  startLoader,
+  stopLoader,
 } from "../redux/action";
 
 const SingleLocation = ({ location }) => {
@@ -62,11 +64,7 @@ const SingleLocation = ({ location }) => {
   );
   console.log(listOfFavourites);
 
-  const isFavourite = listOfFavourites.some(
-    (favourite) => favourite.id === location.id
-  );
-
-  const handleFavourite = () => {
+  const handleFavourite = async () => {
     if (isFavourite) {
       console.warn("Location is already a favourite");
       return;
@@ -76,14 +74,30 @@ const SingleLocation = ({ location }) => {
     } catch (error) {
       console.error("Error adding favourite Location");
     }
+    await setIsFavourite(!isFavourite);
   };
   const handleDeleteFavourite = async () => {
     try {
+      dispatch(startLoader());
       await dispatch(fetchDeleteFavouriteLocation(userLoggedIn, location.id));
+      dispatch(stopLoader());
     } catch (error) {
       console.error("Error deleting favourite Location");
+    } finally {
+      dispatch(stopLoader());
     }
+    await setIsFavourite(!isFavourite);
   };
+
+  const isLoading = useSelector((state) => state.deleteLocation.isLoading);
+
+  const [isFavourite, setIsFavourite] = useState(false);
+
+  useEffect(() => {
+    setIsFavourite(
+      listOfFavourites.some((favourite) => favourite.id === location.id)
+    );
+  }, [listOfFavourites, location.id]);
 
   return (
     <Col xs={12} md={6} lg={4}>
@@ -117,6 +131,11 @@ const SingleLocation = ({ location }) => {
                             handleDelete();
                           }}
                         ></i>
+                        {isLoading && (
+                          <div className="d-flex justify-content-center align-items-center w-100">
+                            <Spinner animation="border" role="status"></Spinner>
+                          </div>
+                        )}
                       </>
                     )}
                   </span>
@@ -136,14 +155,15 @@ const SingleLocation = ({ location }) => {
 
             <div className="d-flex align-items-end justify-content-between">
               <Button onClick={() => setFrontSide(false)}>Più dettagli</Button>
-              {isFavourite ? (
-                <i
-                  className="bi bi-suit-heart-fill"
-                  onClick={handleDeleteFavourite}
-                ></i>
-              ) : (
-                <i className="bi bi-suit-heart" onClick={handleFavourite}></i>
-              )}
+              {userLoggedIn &&
+                (isFavourite ? (
+                  <i
+                    className="bi bi-suit-heart-fill"
+                    onClick={handleDeleteFavourite}
+                  ></i>
+                ) : (
+                  <i className="bi bi-suit-heart" onClick={handleFavourite}></i>
+                ))}
             </div>
           </Card.Body>
         </Card>
@@ -161,11 +181,8 @@ const SingleLocation = ({ location }) => {
             </Card.Subtitle>
             <Card.Text>{location.description}</Card.Text>
             <Card.Text>{location.outdoor}</Card.Text>
-            {location.price !== null ? (
-              <Card.Text>{location.price} €</Card.Text>
-            ) : (
-              <Card.Text>Nessun prezzo disponibile</Card.Text>
-            )}
+
+            <Card.Text>{location.price} €</Card.Text>
 
             <Card.Text>{location.locationType}</Card.Text>
             <Card.Text>{location.influxOfPeople}</Card.Text>

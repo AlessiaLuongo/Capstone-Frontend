@@ -66,7 +66,7 @@ const AddNewActivity = ({ showActivity, handleCloseActivity }) => {
     } catch (error) {
       console.error("Error:", error);
     } finally {
-      dispatch(stopLoader);
+      dispatch(stopLoader());
       handleCloseActivity();
     }
   };
