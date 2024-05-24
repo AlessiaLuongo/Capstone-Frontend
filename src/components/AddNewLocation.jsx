@@ -185,7 +185,7 @@ const AddNewLocation = ({ showLocation, handleCloseLocation }) => {
             </Form.Select>
           </FormGroup>
           <FormGroup>
-            <Form.Label>Quanto affluenza c&#39;è?</Form.Label>
+            <Form.Label>Quanta affluenza c&#39;è?</Form.Label>
             <Form.Select
               aria-label="Default select example"
               value={newLocation.influxOfPeople}

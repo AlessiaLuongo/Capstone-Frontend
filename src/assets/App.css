@@ -15,6 +15,10 @@ main {
   flex-grow: 1;
 }
 
+.modal-header {
+  background-color: rgba(196, 228, 221, 0.2705882353);
+}
+
 footer {
   background-color: #a3cbc2;
 }
@@ -73,6 +77,14 @@ main i:hover {
 
 #best-post-button {
   border-radius: 5%;
+}
+
+div {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.profile-infos {
+  font-size: larger;
 }
 
 /*!

@@ -25,11 +25,20 @@ const AllLocations = () => {
     if (inputValue.trim() === "") {
       setFilteredLocations(listaLocations);
     } else {
-      const filteredList = listaLocations.filter(
-        (location) =>
+      const filteredList = listaLocations.filter((location) => {
+        const outdoorString = location.outdoor ? "outdoor" : "indoor";
+
+        return (
           location.title.toLowerCase().includes(inputValue.toLowerCase()) ||
-          location.description.toLowerCase().includes(inputValue.toLowerCase())
-      );
+          location.description
+            .toLowerCase()
+            .includes(inputValue.toLowerCase()) ||
+          location.locationType
+            .toLowerCase()
+            .includes(inputValue.toLowerCase()) ||
+          outdoorString.includes(inputValue.toLowerCase())
+        );
+      });
       setFilteredLocations(filteredList);
     }
   }, [inputValue, listaLocations]);

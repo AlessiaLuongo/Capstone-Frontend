@@ -62,7 +62,6 @@ const SingleLocation = ({ location }) => {
   const listOfFavourites = useSelector(
     (state) => state.getFavouriteLocations.content
   );
-  console.log(listOfFavourites);
 
   const handleFavourite = async () => {
     if (isFavourite) {
@@ -180,12 +179,14 @@ const SingleLocation = ({ location }) => {
               {rateStar(location.rate)}
             </Card.Subtitle>
             <Card.Text>{location.description}</Card.Text>
-            <Card.Text>{location.outdoor}</Card.Text>
+            <Card.Text>
+              {location.outdoor === true ? "Luogo Outdoor" : "Luogo Indoor"}
 
-            <Card.Text>{location.price} €</Card.Text>
+              {location.price === 0 ? " e gratuito" : ` ${location.price} €`}
+            </Card.Text>
 
-            <Card.Text>{location.locationType}</Card.Text>
-            <Card.Text>{location.influxOfPeople}</Card.Text>
+            <Card.Text> Tipo di attività: {location.locationType}</Card.Text>
+            <Card.Text>Affluenza: {location.influxOfPeople}</Card.Text>
 
             <div className="d-flex align-items-end justify-content-between">
               <div>

@@ -26,16 +26,18 @@ const AllActivities = () => {
     if (inputValue.trim() === "") {
       setFilteredActivities(listaActivities);
     } else {
-      const filteredList = listaActivities.filter(
-        (activity) =>
+      const filteredList = listaActivities.filter((activity) => {
+        const outdoorString = activity.outdoor ? "outdoor" : "indoor";
+
+        return (
           activity.title.toLowerCase().includes(inputValue.toLowerCase()) ||
           activity.description
             .toLowerCase()
             .includes(inputValue.toLowerCase()) ||
-          activity.eventType
-            .toLowerCase()
-            .includes(inputValue.toLocaleLowerCase())
-      );
+          activity.eventType.toLowerCase().includes(inputValue.toLowerCase()) ||
+          outdoorString.includes(inputValue.toLowerCase())
+        );
+      });
       setFilteredActivities(filteredList);
     }
   }, [inputValue, listaActivities]);

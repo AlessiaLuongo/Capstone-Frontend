@@ -187,15 +187,21 @@ const SingleActivity = ({ activity }) => {
             <Card.Subtitle className="mb-2 text-muted text-end">
               {rateStar(activity.rate)}
             </Card.Subtitle>
-            <Card.Text>{activity.outdoor}</Card.Text>
+
             <CardText>{activity.description}</CardText>
-            <CardText>{activity.price} €</CardText>
+            <Card.Text>
+              {activity.outdoor === true
+                ? "Attività Outdoor"
+                : "Attività Indoor"}
+
+              {activity.price === 0 ? " e gratuita" : ` ${activity.price} €`}
+            </Card.Text>
             <CardText>
               Dal{"  "}
               {dateFormatter(activity.startDate)}
               {"  "} al {dateFormatter(activity.endDate)}
             </CardText>
-            <CardText> {activity.eventType}</CardText>
+            <CardText> Tipo di attività: {activity.eventType}</CardText>
 
             <div className="d-flex align-items-end justify-content-between">
               <div>

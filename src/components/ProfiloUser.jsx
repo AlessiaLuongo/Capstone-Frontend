@@ -39,8 +39,8 @@ const ProfiloUser = () => {
   }, [dispatch, accessToken]);
 
   return (
-    <Container fluid className="pb-5">
-      <Row className="py-5 g-3 align-items-center ">
+    <Container fluid className="p-5">
+      <Row className="py-5 g-3 align-items-center px-5">
         <Col xs={12} md={5} lg={4}>
           <Image
             src={currentUser.avatar}
@@ -49,7 +49,7 @@ const ProfiloUser = () => {
             height={"130vh"}
           />
         </Col>
-        <Col xs={12} md={7} lg={8}>
+        <Col xs={12} md={7} lg={8} className="profile-infos">
           <div className="d-flex justify-content-between">
             {currentUser.username}
             <i className="bi bi-vector-pen me-2 " onClick={handleShow}></i>
@@ -68,28 +68,27 @@ const ProfiloUser = () => {
           {currentUser.surname}
         </Col>
       </Row>
-      <Row className="flex-column">
-        <Col xs={12} md={5} lg={4}>
-          Le mie attività preferite{" "}
-        </Col>
+      <Row className="flex-row g-4 p-5">
+        <h2> Le mie attività preferite</h2>
         {listOfFavouriteActivities.length > 0 ? (
           listOfFavouriteActivities.map((activity) => (
             <SingleActivity key={activity.id} activity={activity} />
           ))
         ) : (
-          <Alert variant="info" className="text-center my-5">
+          <Alert variant="info" className="text-center mx-5">
             No Activities found
           </Alert>
         )}
-        <Col xs={12} md={5} lg={4}>
-          I miei luoghi preferiti{" "}
-        </Col>
+
+        <hr />
+
+        <h2>I miei luoghi preferiti</h2>
         {listOfFavouriteLocations.length > 0 ? (
           listOfFavouriteLocations.map((location) => (
             <SingleLocation key={location.id} location={location} />
           ))
         ) : (
-          <Alert variant="info" className="text-center my-5">
+          <Alert variant="info" className="text-center mx-5">
             No Locations found
           </Alert>
         )}
