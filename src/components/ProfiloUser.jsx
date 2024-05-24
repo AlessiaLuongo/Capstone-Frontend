@@ -41,12 +41,12 @@ const ProfiloUser = () => {
   return (
     <Container fluid className="p-5">
       <Row className="py-5 g-3 align-items-center px-5">
-        <Col xs={12} md={5} lg={4}>
+        <Col xs={12} md={5} lg={4} className="text-center">
           <Image
             src={currentUser.avatar}
             roundedCircle
-            width={"130vh"}
-            height={"130vh"}
+            width={"170vh"}
+            height={"170vh"}
           />
         </Col>
         <Col xs={12} md={7} lg={8} className="profile-infos">
