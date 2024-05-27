@@ -51,16 +51,13 @@ export const registerUser = (newUser) => {
 export const LoginUser = (user) => {
   return async (dispatch) => {
     const body = JSON.stringify(user);
-    const response = await fetch(
-      `https://hello-world-alessia-f88536a5.koyeb.app/auth/login`,
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: body,
-      }
-    );
+    const response = await fetch(`${API_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: body,
+    });
     if (response.ok) {
       const data = await response.json();
 
