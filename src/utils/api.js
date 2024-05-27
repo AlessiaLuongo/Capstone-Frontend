@@ -1,1 +1,1 @@
-export const API_URL = import.meta.env.REACT_APP_API_URL;
+export const API_URL = `https://hello-world-alessia-f88536a5.koyeb.app`;
