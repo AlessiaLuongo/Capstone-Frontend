@@ -1,5 +1,3 @@
-import { API_URL } from "../../utils/api";
-
 export const GET_ALL_ACTIVITIES = "GET_ALL_ACTIVITIES";
 export const GET_ALL_LOCATIONS = "GET_ALL_LOCATIONS";
 export const LOGIN = "LOGIN";
@@ -30,7 +28,7 @@ export const STOP_LOADER = "STOP_LOADER";
 
 export const registerUser = (newUser) => {
   return async (dispatch) => {
-    const response = await fetch(`${API_URL}/auth/register`, {
+    const response = await fetch(`http://localhost:3001/auth/register`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -51,7 +49,7 @@ export const registerUser = (newUser) => {
 export const LoginUser = (user) => {
   return async (dispatch) => {
     const body = JSON.stringify(user);
-    const response = await fetch(`${API_URL}/auth/login`, {
+    const response = await fetch(`http://localhost:3001/auth/login`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -80,7 +78,7 @@ export const logoutUser = () => {
 export const getCurrentUser = (accessToken) => {
   return async (dispatch) => {
     console.log("ok");
-    const response = await fetch(`${API_URL}/users/me`, {
+    const response = await fetch(`http://localhost:3001/users/me`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -103,7 +101,7 @@ export const getCurrentUser = (accessToken) => {
 
 export const fetchUpdateUserInfos = (accessToken, updatedUser) => {
   return async (dispatch) => {
-    const response = await fetch(`${API_URL}/users/me`, {
+    const response = await fetch(`http://localhost:3001/users/me`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -130,7 +128,7 @@ export const fetchUpdateUserInfos = (accessToken, updatedUser) => {
 
 export const fetchAllActivities = (page = 0, size = 10) => {
   return async (dispatch) => {
-    const response = await fetch(`${API_URL}/activities`, {
+    const response = await fetch(`http://localhost:3001/activities`, {
       method: "GET",
       headers: {
         "Content-type": "application/json",
@@ -153,7 +151,7 @@ export const fetchAllActivities = (page = 0, size = 10) => {
 
 export const fetchCreateNewActivity = (body, accessToken) => {
   return async (dispatch) => {
-    const response = await fetch(`${API_URL}/activities/me`, {
+    const response = await fetch(`http://localhost:3001/activities/me`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -184,14 +182,17 @@ export const updateSingleActivity = (
   return async (dispatch) => {
     console.log("ok");
     try {
-      const response = await fetch(`${API_URL}/activities/${activityId}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(updatedActivity),
-      });
+      const response = await fetch(
+        `http://localhost:3001/activities/${activityId}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(updatedActivity),
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         console.log("response:", response);
@@ -212,13 +213,16 @@ export const updateSingleActivity = (
 
 export const deleteSingleActivity = (activityId, accessToken) => {
   return async (dispatch) => {
-    const response = await fetch(`${API_URL}/activities/${activityId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `http://localhost:3001/activities/${activityId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-type": "application/json",
+        },
+      }
+    );
     if (response.ok) {
       dispatch({
         type: DELETE_SINGLE_ACTIVITY,
@@ -233,13 +237,16 @@ export const deleteSingleActivity = (activityId, accessToken) => {
 
 export const fetchFavouriteActivities = (accessToken) => {
   return async (dispatch) => {
-    const response = await fetch(`${API_URL}/users/me/favourite-activities`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `http://localhost:3001/users/me/favourite-activities`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-type": "application/json",
+        },
+      }
+    );
     if (response.ok) {
       const data = await response.json();
       console.log("fav", data);
@@ -258,7 +265,7 @@ export const fetchFavouriteActivities = (accessToken) => {
 export const fetchAddFavouriteActivities = (accessToken, activityId) => {
   return async (dispatch) => {
     const response = await fetch(
-      `${API_URL}/users/me/favourite-activities/${activityId}`,
+      `http://localhost:3001/users/me/favourite-activities/${activityId}`,
       {
         method: "PATCH",
         headers: {
@@ -286,7 +293,7 @@ export const fetchDeleteFavouriteActivity = (accessToken, activityId) => {
   return async (dispatch) => {
     try {
       const response = await fetch(
-        `${API_URL}/users/me/favourite-activities/${activityId}`,
+        `http://localhost:3001/users/me/favourite-activities/${activityId}`,
         {
           method: "DELETE",
           headers: {
@@ -315,7 +322,7 @@ export const fetchDeleteFavouriteActivity = (accessToken, activityId) => {
 
 export const fetchAllLocations = (page = 0, size = 10) => {
   return async (dispatch) => {
-    const response = await fetch(`${API_URL}/locations`, {
+    const response = await fetch(`http://localhost:3001/locations`, {
       method: "GET",
       headers: {
         "Content-type": "application/json",
@@ -341,7 +348,7 @@ export const fetchCreateNewLocation = (body, accessToken) => {
   console.log(accessToken);
   console.log(body);
   return async (dispatch) => {
-    const response = await fetch(`${API_URL}/locations/me`, {
+    const response = await fetch(`http://localhost:3001/locations/me`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -370,14 +377,17 @@ export const updateSingleLocation = (
 ) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`${API_URL}/locations/me/${locationId}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(updatedLocation),
-      });
+      const response = await fetch(
+        `http://localhost:3001/locations/me/${locationId}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(updatedLocation),
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         dispatch({
@@ -396,13 +406,16 @@ export const updateSingleLocation = (
 
 export const deleteSingleLocation = (locationId, accessToken) => {
   return async (dispatch) => {
-    const response = await fetch(`${API_URL}/locations/${locationId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `http://localhost:3001/locations/${locationId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-type": "application/json",
+        },
+      }
+    );
     if (response.ok) {
       dispatch({
         type: DELETE_SINGLE_LOCATION,
@@ -417,13 +430,16 @@ export const deleteSingleLocation = (locationId, accessToken) => {
 
 export const fetchFavouriteLocations = (accessToken) => {
   return async (dispatch) => {
-    const response = await fetch(`${API_URL}/users/me/favourite-locations`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `http://localhost:3001/users/me/favourite-locations`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-type": "application/json",
+        },
+      }
+    );
     if (response.ok) {
       const data = await response.json();
       console.log("fav", data);
@@ -442,7 +458,7 @@ export const fetchFavouriteLocations = (accessToken) => {
 export const fetchAddFavouriteLocations = (accessToken, locationId) => {
   return async (dispatch) => {
     const response = await fetch(
-      `${API_URL}/users/me/favourite-locations/${locationId}`,
+      `http://localhost:3001/users/me/favourite-locations/${locationId}`,
       {
         method: "PATCH",
         headers: {
@@ -470,7 +486,7 @@ export const fetchDeleteFavouriteLocation = (accessToken, locationId) => {
   return async (dispatch) => {
     try {
       const response = await fetch(
-        `${API_URL}/users/me/favourite-locations/${locationId}`,
+        `http://localhost:3001/users/me/favourite-locations/${locationId}`,
         {
           method: "DELETE",
           headers: {
@@ -497,7 +513,7 @@ export const fetchDeleteFavouriteLocation = (accessToken, locationId) => {
 
 export const fetchTheBestPosts = () => {
   return async (dispatch) => {
-    const response = await fetch(`${API_URL}`, {
+    const response = await fetch(`http://localhost:3001`, {
       method: "GET",
       headers: {
         "Content-type": "application/json",
@@ -524,7 +540,7 @@ export const fetchUploadImage = (accessToken, avatar) => {
 
   return async (dispatch) => {
     try {
-      const response = await fetch(`${API_URL}/users/me/avatar`, {
+      const response = await fetch(`http://localhost:3001/users/me/avatar`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -555,13 +571,16 @@ export const uploadActivityPicture = (accessToken, picture, activityId) => {
 
   return async (dispatch) => {
     try {
-      const response = await fetch(`${API_URL}/activities/${activityId}`, {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: formData,
-      });
+      const response = await fetch(
+        `http://localhost:3001/activities/${activityId}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: formData,
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         console.log("data", data);
@@ -586,13 +605,16 @@ export const uploadLocationPicture = (accessToken, picture, locationId) => {
 
   return async (dispatch) => {
     try {
-      const response = await fetch(`${API_URL}/locations/${locationId}`, {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: formData,
-      });
+      const response = await fetch(
+        `http://localhost:3001/locations/${locationId}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: formData,
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         console.log("data", data);
